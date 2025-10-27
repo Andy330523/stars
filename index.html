@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Stargazing Above – Astrophotography</title>
+<style>
+  body {
+    font-family: system-ui, sans-serif;
+    background: #0b0f1a;
+    color: #e5e7eb;
+    margin: 0;
+    line-height: 1.6;
+  }
+  header {
+    position: sticky;
+    top: 0;
+    background: rgba(10, 15, 26, 0.85);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .lang-toggle button {
+    margin-left: 6px;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #e5e7eb;
+    border-radius: 6px;
+    padding: 4px 10px;
+    cursor: pointer;
+  }
+  main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  .hero {
+    text-align: center;
+    padding: 60px 10px;
+  }
+  .btn {
+    background: linear-gradient(90deg, #8b5cf6, #22d3ee);
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+    margin-top: 20px;
+  }
+  .gallery img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+  footer {
+    text-align: center;
+    padding: 20px;
+    color: #94a3b8;
+    font-size: 14px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div><strong id="brand">Stargazing Above</strong></div>
+    <div class="lang-toggle">
+      <button id="lang-en">EN</button>
+      <button id="lang-zh">中文</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1 id="title">Stargazing Above</h1>
+      <p id="tagline">A year-long astrophotography journey — learning the sky, capturing deep-sky objects, and sharing the wonder.</p>
+      <a href="#gallery" class="btn" id="cta">View Gallery</a>
+    </section>
+
+    <section id="about">
+      <h2 id="about-h2">About the Project</h2>
+      <p id="about-p">This project documents my astrophotography Capstone — studying astronomy, learning imaging techniques, and creating a photo book with a documentary video.</p>
+    </section>
+
+    <section id="gallery">
+      <h2 id="gallery-h2">Gallery</h2>
+      <div class="gallery">
+        <a href="https://upload.wikimedia.org/wikipedia/commons/6/6f/Elephant_trunk_Ha%2BOIII%2BSII_Hubble_palette_modified.jpg">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Elephant_trunk_Ha%2BOIII%2BSII_Hubble_palette_modified.jpg/640px-Elephant_trunk_Ha%2BOIII%2BSII_Hubble_palette_modified.jpg" alt="Deep Sky 1">
+        </a>
+        <a href="https://cdn.esahubble.org/archives/images/large/heic1307a.jpg">
+          <img src="https://cdn.esahubble.org/archives/images/screen/heic1307a.jpg" alt="Deep Sky 2">
+        </a>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2 id="contact-h2">Contact</h2>
+      <p id="contact-p">For collaboration or feedback, email me at <a href="mailto:andy@example.com">andy@example.com</a></p>
+    </section>
+  </main>
+
+  <footer id="footer">© 2025 Stargazing Above · Built by Andy under the night sky.</footer>
+
+  <script>
+    const I18N = {
+      en: {
+        brand: "Stargazing Above",
+        title: "Stargazing Above",
+        tagline: "A year-long astrophotography journey — learning the sky, capturing deep-sky objects, and sharing the wonder.",
+        cta: "View Gallery",
+        "about-h2": "About the Project",
+        "about-p": "This project documents my astrophotography Capstone — studying astronomy, learning imaging techniques, and creating a photo book with a documentary video.",
+        "gallery-h2": "Gallery",
+        "contact-h2": "Contact",
+        "contact-p": "For collaboration or feedback, email me at ",
+        footer: "© 2025 Stargazing Above · Built by Andy under the night sky."
+      },
+      zh: {
+        brand: "仰望星空",
+        title: "仰望星空",
+        tagline: "一年的天文摄影旅程——学习星空、拍摄深空、分享惊叹。",
+        cta: "查看作品集",
+        "about-h2": "项目简介",
+        "about-p": "本项目记录我进行天文摄影的全过程——学习天文学、掌握成像技巧，制作摄影集与纪录短片。",
+        "gallery-h2": "作品集",
+        "contact-h2": "联系",
+        "contact-p": "如需合作或交流，请通过邮箱联系：",
+        footer: "© 2025 仰望星空 · 由 Andy 在星空下搭建。"
+      }
+    };
+
+    function setLang(lang) {
+      for (const id in I18N[lang]) {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = I18N[lang][id];
+      }
+      localStorage.setItem("lang", lang);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const lang = localStorage.getItem("lang") || "en";
+      setLang(lang);
+      document.getElementById("lang-en").onclick = () => setLang("en");
+      document.getElementById("lang-zh").onclick = () => setLang("zh");
+
+      // Lightbox
+      document.querySelectorAll(".gallery a").forEach(link => {
+        link.addEventListener("click", e => {
+          e.preventDefault();
+          const imgSrc = link.getAttribute("href");
+          const lb = document.createElement("div");
+          lb.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,0.9);display:flex;align-items:center;justify-content:center;z-index:9999;";
+          lb.innerHTML = `<img src='${imgSrc}' style='max-width:90%;max-height:90%;border-radius:10px;'><div style='position:absolute;top:20px;right:20px;color:#fff;font-size:28px;cursor:pointer'>&times;</div>`;
+          lb.addEventListener("click", () => lb.remove());
+          document.body.appendChild(lb);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
