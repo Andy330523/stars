@@ -2,18 +2,69 @@
 <html lang="zh">
 <head>
 <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>作品集</title>
 <style>
   body {
+    font-family: system-ui, sans-serif;
     background: #0b0f1a;
     color: #e5e7eb;
-    font-family: system-ui, sans-serif;
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  header {
+    position: sticky;
+    top: 0;
+    background: rgba(10, 15, 26, 0.85);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-left {
+    display: flex;
+    align-items: center;
+  }
+
+  #brand {
+    font-size: 26px;
+    font-weight: 700;
+    margin-right: 20px;
+    color: #e5e7eb;
+    text-decoration: none;
+  }
+
+  .nav-link {
+    color: #e5e7eb;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  main {
+    max-width: 960px;
+    margin: 0 auto;
     padding: 40px;
+    text-align: center;
   }
 </style>
 </head>
 <body>
-  <h1>作品集</h1>
-  <p>这里以后可以放你的深空摄影作品。</p>
+
+  <header>
+    <div class="nav-left">
+      <a href="index.html" id="brand">群星</a>
+      <a href="gallery.html" class="nav-link">作品集</a>
+    </div>
+  </header>
+
+  <main>
+    <h1>作品集</h1>
+    <p>这是一个空白页面，你可以在这里添加你的摄影作品。</p>
+  </main>
+
 </body>
 </html>
