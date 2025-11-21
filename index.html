@@ -5,6 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>CD的星空 – 天文摄影</title>
 <style>
+  #brand {
+  font-size: 26px;
+  font-weight: 700;
+  margin-right: 20px;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+}
+
+.nav-link {
+  color: #e5e7eb;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 600;
+}
   body {
     font-family: system-ui, sans-serif;
     background: #0b0f1a;
@@ -64,18 +81,16 @@
 </head>
 <body>
   <header>
-    <div><strong id="brand">群星</strong></div>
-    <nav>
-    <a href="gallery.html" style="color:#e5e7eb; text-decoration:none; font-weight:600; margin-left:20px;">
-      作品集
-    </a>
-  </nav>
-  </header>
+  <div class="nav-left">
+    <strong id="brand">群星</strong>
+    <a href="gallery.html" class="nav-link">作品集</a>
+  </div>
+</header>
 
   <main>
     <section class="hero">
       <h1 id="title">CD的星空</h1>
-      <p id="tagline">一年的天文摄影旅程——学习星空、拍摄深空、分享惊叹。</p>
+      <p id="tagline">一年的天文摄影旅程 </p>
       
     </section>
 
