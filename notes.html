@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>一些碎碎念...</title>
+
 <style>
   body {
     font-family: system-ui, sans-serif;
@@ -18,7 +19,7 @@
     top: 0;
     background: rgba(10, 15, 26, 0.85);
     backdrop-filter: blur(8px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
     padding: 10px 20px;
     display: flex;
     align-items: center;
@@ -38,11 +39,18 @@
   }
 
   .nav-link {
+    margin-right: 20px;
     color: #e5e7eb;
     text-decoration: none;
     font-size: 18px;
     font-weight: 600;
-    margin-right: 20px;
+  }
+
+  #brand:hover,
+  .nav-link:hover {
+    color: #ffffff;
+    text-shadow: 0 0 8px #8b5cf6, 0 0 15px #22d3ee;
+    transition: 0.3s;
   }
 
   main {
@@ -50,8 +58,22 @@
     margin: 0 auto;
     padding: 40px 20px;
   }
+
+  footer {
+    text-align: center;
+    padding: 20px;
+    color: #94a3b8;
+    font-size: 14px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  footer a {
+    color: #94a3b8;
+    text-decoration: none;
+  }
 </style>
 </head>
+
 <body>
 
 <header>
@@ -64,8 +86,13 @@
 
 <main>
   <h1>一些碎碎念...</h1>
-  <p>这里是你的随笔、小想法、小日记、灵感记录…你想写什么都可以。</p>
+  <p>这里可以用来记录你的随笔、日记、小想法、小碎碎念。</p>
 </main>
+
+<footer>
+  <p>联系：<a href="mailto:AndyZhouChudi@outlook.com">AndyZhouChudi@outlook.com</a></p>
+  <p>© 2025 CD的星空 · Andy 在星空下搭建。</p>
+</footer>
 
 </body>
 </html>
