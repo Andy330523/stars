@@ -4,7 +4,9 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>CD的星空 – 天文摄影</title>
+
 <style>
+  /* 顶栏样式（所有页面通用） */
   body {
     font-family: system-ui, sans-serif;
     background: #0b0f1a;
@@ -18,7 +20,7 @@
     top: 0;
     background: rgba(10, 15, 26, 0.85);
     backdrop-filter: blur(8px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
     padding: 10px 20px;
     display: flex;
     align-items: center;
@@ -38,22 +40,50 @@
   }
 
   .nav-link {
+    margin-right: 20px;
     color: #e5e7eb;
     text-decoration: none;
     font-size: 18px;
     font-weight: 600;
-    margin-right: 20px;
+  }
+
+  /* 鼠标发光效果（通用） */
+  #brand:hover,
+  .nav-link:hover {
+    color: #ffffff;
+    text-shadow: 0 0 8px #8b5cf6, 0 0 15px #22d3ee;
+    transition: 0.3s;
   }
 
   main {
     max-width: 960px;
     margin: 0 auto;
-    padding: 40px 20px;
+    padding: 20px;
+  }
+
+  .hero {
+    text-align: center;
+    padding: 60px 10px;
+  }
+
+  footer {
+    text-align: center;
+    padding: 20px;
+    color: #94a3b8;
+    font-size: 14px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  footer a {
+    color: #94a3b8;
+    text-decoration: none;
   }
 </style>
 </head>
+
 <body>
-  <header>
+
+<header>
   <div class="nav-left">
     <a href="index.html" id="brand">群星</a>
     <a href="gallery.html" class="nav-link">作品集</a>
@@ -61,48 +91,22 @@
   </div>
 </header>
 
-  <main>
-    <section class="hero">
-      <h1 id="title">CD的星空</h1>
-      <p id="tagline">一年的天文摄影旅程 </p>
-      
-    </section>
+<main>
+  <section class="hero">
+    <h1>CD的星空</h1>
+    <p>一年的天文摄影旅程</p>
+  </section>
 
-    <section id="about">
-      <h2 id="about-h2">简介</h2>
-      <p id="about-p">曾几何时，我在群星下思考，星空如此繁大，个体如此渺小。而天文摄影让我可以瞥见无限宇宙的一角，似乎拉近了两者的距离</p>
-    </section>
-    
-  
-  </main>
+  <section>
+    <h2>简介</h2>
+    <p>曾几何时，我在群星下思考，星空如此繁大，个体如此渺小。而天文摄影让我可以瞥见无限宇宙的一角。</p>
+  </section>
+</main>
 
- <footer id="footer">
-  <p style="margin: 4px 0;">
-    联系：<a href="mailto:AndyZhouChudi@outlook.com" style="color:#94a3b8; text-decoration:none;">
-      AndyZhouChudi@outlook.com
-    </a>
-  </p>
-
-  <p style="margin: 4px 0;">
-    © 2025 CD的星空 · Andy 在星空下搭建。
-  </p>
+<footer>
+  <p>联系：<a href="mailto:AndyZhouChudi@outlook.com">AndyZhouChudi@outlook.com</a></p>
+  <p>© 2025 CD的星空 · Andy 在星空下搭建。</p>
 </footer>
 
-  <script>
-    // Lightbox
-    document.addEventListener("DOMContentLoaded", () => {
-      document.querySelectorAll(".gallery a").forEach(link => {
-        link.addEventListener("click", e => {
-          e.preventDefault();
-          const imgSrc = link.getAttribute("href");
-          const lb = document.createElement("div");
-          lb.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,0.9);display:flex;align-items:center;justify-content:center;z-index:9999;";
-          lb.innerHTML = `<img src='${imgSrc}' style='max-width:90%;max-height:90%;border-radius:10px;'><div style='position:absolute;top:20px;right:20px;color:#fff;font-size:28px;cursor:pointer'>&times;</div>`;
-          lb.addEventListener("click", () => lb.remove());
-          document.body.appendChild(lb);
-        });
-      });
-    });
-  </script>
 </body>
 </html>
