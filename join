@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>加入我们</title>
+
+<style>
+  body {
+    font-family: system-ui, sans-serif;
+    background: #0b0f1a;
+    color: #e5e7eb;
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  header {
+    position: sticky;
+    top: 0;
+    background: rgba(10, 15, 26, 0.85);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-left {
+    display: flex;
+    align-items: center;
+  }
+
+  #brand {
+    font-size: 26px;
+    font-weight: 700;
+    margin-right: 20px;
+    color: #e5e7eb;
+    text-decoration: none;
+  }
+
+  .nav-link {
+    margin-right: 20px;
+    color: #e5e7eb;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  #brand:hover,
+  .nav-link:hover {
+    color: #ffffff;
+    text-shadow: 0 0 8px #8b5cf6, 0 0 15px #22d3ee;
+    transition: 0.3s;
+  }
+
+  main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+
+  footer {
+    text-align: center;
+    padding: 20px;
+    color: #94a3b8;
+    font-size: 14px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  footer a {
+    color: #94a3b8;
+    text-decoration: none;
+  }
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="nav-left">
+    <a href="index.html" id="brand">群星</a>
+    <a href="gallery.html" class="nav-link">作品集</a>
+    <a href="notes.html" class="nav-link">一些碎碎念...</a>
+    <a href="join.html" class="nav-link">加入我们</a>
+  </div>
+</header>
+
+<main>
+  <h1>加入我们</h1>
+
+</main>
+
+<section id="comments" style="max-width:960px;margin:0 auto;padding:20px 20px 40px;">
+  <h2>评论</h2>
+  <script src="https://utteranc.es/client.js"
+          repo="Andy330523/stars"
+          issue-term="pathname"
+          label="Comment"
+          theme="github-light"
+          crossorigin="anonymous"
+          async>
+  </script>
+</section>
+
+<footer>
+  <p>联系：<a href="mailto:AndyZhouChudi@outlook.com">AndyZhouChudi@outlook.com</a></p>
+  <p>© 2025 CD的星空 · Andy 在星空下搭建。</p>
+</footer>
+
+</body>
+</html>
