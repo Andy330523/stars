@@ -12,20 +12,27 @@
     color: #e5e7eb;
     margin: 0;
     line-height: 1.6;
-
     cursor: url("images/cursor.png") 4 4, auto;
-}
+  }
 
-a, button, .nav-link, #brand {
+  a, button, .nav-link, #brand {
     cursor: url("images/pointer.png") 6 0, pointer;
-}
-  
-  body {
-    font-family: system-ui, sans-serif;
-    background: #0b0f1a;
-    color: #e5e7eb;
-    margin: 0;
-    line-height: 1.6;
+  }
+
+  /* ★ 全屏星空背景画布 */
+  #galaxy-bg {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;   /* 在内容后面 */
+    display: block;
+  }
+
+  /* ★ 正文内容容器，盖在星空上 */
+  .page-content {
+    position: relative;
+    z-index: 1;
   }
 
   header {
@@ -90,6 +97,12 @@ a, button, .nav-link, #brand {
 
 <body>
 
+<!-- ★ 星光背景画布 -->
+<canvas id="galaxy-bg"></canvas>
+
+<!-- ★ 正文包一层，盖在星空上 -->
+<div class="page-content">
+
 <header>
   <div class="nav-left">
     <a href="index.html" id="brand">群星</a>
@@ -103,7 +116,8 @@ a, button, .nav-link, #brand {
   <h1>作品集</h1>
   <p>暂无......</p>
 </main>
-  <section id="comments" style="max-width:960px;margin:0 auto;padding:20px 20px 40px;">
+
+<section id="comments" style="max-width:960px;margin:0 auto;padding:20px 20px 40px;">
   <h2>评论</h2>
   <script src="https://utteranc.es/client.js"
           repo="Andy330523/stars"
@@ -120,5 +134,9 @@ a, button, .nav-link, #brand {
   <p>© 2025 CD的星空 · Andy 在星空下搭建。</p>
 </footer>
 
+</div> <!-- /.page-content -->
+
+<!-- ★ 引入你的星空动画脚本 -->
+<script src="galaxy.js"></script>
 </body>
 </html>
