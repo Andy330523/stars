@@ -6,6 +6,13 @@
 <title>作品集</title>
 
 <style>
+  /* 当前页面导航项常亮 */
+.nav-link.active,
+#brand.active {
+    color: #ffffff;
+    text-shadow: 0 0 8px #8b5cf6, 0 0 15px #22d3ee;
+}
+  
   body {
     font-family: system-ui, sans-serif;
     background: #0b0f1a;
@@ -138,5 +145,18 @@
 
 <!-- ★ 引入你的星空动画脚本 -->
 <script src="galaxy.js"></script>
+  
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const page = window.location.pathname.split("/").pop();
+
+    document.querySelectorAll("header a").forEach(a => {
+        if (a.getAttribute("href") === page) {
+            a.classList.add("active");
+        }
+    });
+});
+</script>
+  
 </body>
 </html>
