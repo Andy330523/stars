@@ -1,6 +1,8 @@
-// ====== Galaxy Background: Bright Moving Stars Only ======
+// ===== Galaxy Background: Bright Moving Stars Only =====
 const canvas = document.getElementById("galaxy-bg");
 const ctx = canvas.getContext("2d");
+
+let running = true;
 
 function resize() {
   canvas.width = innerWidth;
@@ -36,19 +38,24 @@ function drawStars() {
 
     const twinkle = 0.5 + 0.5 * Math.sin(Date.now() * 0.005 + s.x);
     ctx.globalAlpha = s.alpha * twinkle;
-
     ctx.fillStyle = "#ffffff";
     ctx.fillRect(s.x, s.y, s.size, s.size);
   });
 }
 
 function draw() {
+  if (!running) return;
+
   ctx.fillStyle = "#050712";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   drawStars();
-
   requestAnimationFrame(draw);
 }
 
 draw();
+
+/* 页面切换时冻结星空 */
+window.addEventListener("page-exit", () => {
+  running = false;
+});
