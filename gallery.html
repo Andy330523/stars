@@ -6,108 +6,131 @@
 <title>作品集</title>
 
 <style>
-  /* 当前页面导航项常亮 */
+/* ===== 页面切换动画（mac 桌面风格） ===== */
+.page {
+  animation: slideIn 0.5s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+}
+
+.page-exit {
+  animation: slideOut 0.5s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
+
+@keyframes slideOut {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100%); }
+}
+
+/* ===== 当前页面导航高亮 ===== */
 .nav-link.active,
 #brand.active {
-    color: #ffffff;
-    text-shadow: 0 0 8px #8b5cf6, 0 0 15px #22d3ee;
+  color: #ffffff;
+  text-shadow: 0 0 8px #8b5cf6, 0 0 15px #22d3ee;
 }
-  
-  body {
-    font-family: system-ui, sans-serif;
-    background: #0b0f1a;
-    color: #e5e7eb;
-    margin: 0;
-    line-height: 1.6;
-    cursor: url("images/cursor.png") 4 4, auto;
-  }
 
-  a, button, .nav-link, #brand {
-    cursor: url("images/pointer.png") 6 0, pointer;
-  }
+/* ===== 星空背景 ===== */
+#galaxy-bg {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  display: block;
+}
 
-  /* ★ 全屏星空背景画布 */
-  #galaxy-bg {
-    position: fixed;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;   /* 在内容后面 */
-    display: block;
-  }
+/* ===== 全局 ===== */
+body {
+  font-family: system-ui, sans-serif;
+  background: #0b0f1a;
+  color: #e5e7eb;
+  margin: 0;
+  line-height: 1.6;
+  cursor: url("images/cursor.png") 4 4, auto;
+}
 
-  /* ★ 正文内容容器，盖在星空上 */
-  .page-content {
-    position: relative;
-    z-index: 1;
-  }
+a, button, .nav-link, #brand {
+  cursor: url("images/pointer.png") 6 0, pointer;
+}
 
-  header {
-    position: sticky;
-    top: 0;
-    background: rgba(10, 15, 26, 0.85);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    padding: 10px 20px;
-    display: flex;
-    align-items: center;
-  }
+/* ===== 正文容器（盖在星空上） ===== */
+.page-content {
+  position: relative;
+  z-index: 1;
+}
 
-  .nav-left {
-    display: flex;
-    align-items: center;
-  }
+/* ===== 顶栏 ===== */
+header {
+  position: sticky;
+  top: 0;
+  background: rgba(10, 15, 26, 0.85);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+}
 
-  #brand {
-    font-size: 26px;
-    font-weight: 700;
-    margin-right: 20px;
-    color: #e5e7eb;
-    text-decoration: none;
-  }
+.nav-left {
+  display: flex;
+  align-items: center;
+}
 
-  .nav-link {
-    margin-right: 20px;
-    color: #e5e7eb;
-    text-decoration: none;
-    font-size: 18px;
-    font-weight: 600;
-  }
+#brand {
+  font-size: 26px;
+  font-weight: 700;
+  margin-right: 20px;
+  color: #e5e7eb;
+  text-decoration: none;
+}
 
-  #brand:hover,
-  .nav-link:hover {
-    color: #ffffff;
-    text-shadow: 0 0 8px #8b5cf6, 0 0 15px #22d3ee;
-    transition: 0.3s;
-  }
+.nav-link {
+  margin-right: 20px;
+  color: #e5e7eb;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 600;
+}
 
-  main {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 40px 20px;
-  }
+#brand:hover,
+.nav-link:hover {
+  color: #ffffff;
+  text-shadow: 0 0 8px #8b5cf6, 0 0 15px #22d3ee;
+  transition: 0.3s;
+}
 
-  footer {
-    text-align: center;
-    padding: 20px;
-    color: #94a3b8;
-    font-size: 14px;
-    border-top: 1px solid rgba(255,255,255,0.05);
-  }
+/* ===== 正文 ===== */
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
 
-  footer a {
-    color: #94a3b8;
-    text-decoration: none;
-  }
+/* ===== 页脚 ===== */
+footer {
+  text-align: center;
+  padding: 20px;
+  color: #94a3b8;
+  font-size: 14px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+footer a {
+  color: #94a3b8;
+  text-decoration: none;
+}
 </style>
 </head>
 
-<body>
+<body class="page">
 
-<!-- ★ 星光背景画布 -->
+<!-- 星空背景 -->
 <canvas id="galaxy-bg"></canvas>
 
-<!-- ★ 正文包一层，盖在星空上 -->
+<!-- 正文层 -->
 <div class="page-content">
 
 <header>
@@ -143,20 +166,35 @@
 
 </div> <!-- /.page-content -->
 
-<!-- ★ 引入你的星空动画脚本 -->
 <script src="galaxy.js"></script>
-  
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-    const page = window.location.pathname.split("/").pop();
 
-    document.querySelectorAll("header a").forEach(a => {
-        if (a.getAttribute("href") === page) {
-            a.classList.add("active");
-        }
-    });
+<script>
+/* 当前页面高亮 */
+document.addEventListener("DOMContentLoaded", () => {
+  const page = window.location.pathname.split("/").pop();
+  document.querySelectorAll("header a").forEach(a => {
+    if (a.getAttribute("href") === page) {
+      a.classList.add("active");
+    }
+  });
+});
+
+/* mac 桌面式页面切换 + 星空冻结 */
+document.querySelectorAll("header a").forEach(link => {
+  link.addEventListener("click", e => {
+    const href = link.getAttribute("href");
+    if (!href || href.startsWith("#")) return;
+
+    e.preventDefault();
+    document.body.classList.add("page-exit");
+    window.dispatchEvent(new Event("page-exit"));
+
+    setTimeout(() => {
+      window.location.href = href;
+    }, 500);
+  });
 });
 </script>
-  
+
 </body>
 </html>
