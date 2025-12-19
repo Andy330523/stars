@@ -12,8 +12,14 @@
   margin: 20px 0;
 }
 
-.img-row img {
+
+
+.img-item {
   width: 50%;
+}
+
+.img-item img {
+  width: 100%;
   border-radius: 12px;
 }
 
@@ -160,28 +166,37 @@ footer a {
 
 <main>
   <h1>加入我们</h1>
-  <p>如果你也对这个烧钱且费力的项目感兴趣，那就让我来先为你介绍一下拍摄的设备吧。</p>
+  <p>如果你也对这个烧钱且费力的项目感兴趣.....那就让我来先为你介绍一下拍摄的设备吧</p>
 
   <h2>赤道仪</h2>
+  <div class="img-row">
+    <div class="img-item">
+      <img src="images/chidao.png" alt="晴空 ST17-R">
+      <p class="img-caption">晴空 ST17-R</p>
+    </div>
+    <div class="img-item">
+      <img src="images/chidaoyi.png" alt="赤道仪细节">
+    </div>
+  </div>
+
   <p>
-    赤道仪在天文摄影中的作用，就是让相机“跟着星星一起走”。
-    地球自转会让星星在长曝光中拉成线，
-    而赤道仪通过反向转动抵消这种运动，
-    让星体在画面中保持稳定。
+    赤道仪在天文摄影中的作用，就是让相机“跟着星星一起走”。因为地球一直在转，
+    如果不用赤道仪，星星在长曝光里会被拉成一条线。
   </p>
 
   <h2>相机</h2>
+  <img src="images/camera.png" alt="ZWO 2600MC Pro" class="single-img">
+  <p class="img-caption">ZWO 2600MC Pro</p>
+
   <p>
-    普通相机和冷冻相机皆可。
-    冷冻相机的优势在于显著降低热噪点，
-    特别适合 300 秒及以上的长曝光拍摄。
+    普通相机和冷冻相机皆可，冷冻相机对于常规相机的升级点在于热噪点的减少。
   </p>
 
   <h2>主镜</h2>
+   <img src="images/t.png" alt="锐星 91F" class="single-img">
+  <p class="img-caption">锐星 91F</p>
   <p>
-    主镜负责收集来自深空天体的微弱光线。
-    口径越大，收光能力越强，
-    最终成像也越明亮、细节越丰富。
+    望远镜里最大的那块反光镜，负责把来自天体的微弱光线尽可能多地收集起来。
   </p>
 </main>
 
