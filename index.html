@@ -6,14 +6,34 @@
 <title>CD的星空 – 天文摄影</title>
 
 <style>
-  /* 当前页面导航项常亮 */
+/* ===== 页面切换动画（mac 桌面风格） ===== */
+.page {
+  animation: slideIn 0.5s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+}
+
+.page-exit {
+  animation: slideOut 0.5s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
+
+@keyframes slideOut {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100%); }
+}
+
+/* ===== 当前页面导航项常亮 ===== */
 .nav-link.active,
 #brand.active {
-    color: #ffffff;
-    text-shadow: 0 0 8px #8b5cf6, 0 0 15px #22d3ee;
+  color: #ffffff;
+  text-shadow: 0 0 8px #8b5cf6, 0 0 15px #22d3ee;
 }
-  /* 顶栏样式（所有页面通用） */
-  #galaxy-bg {
+
+/* ===== 星空背景 ===== */
+#galaxy-bg {
   position: fixed;
   inset: 0;
   width: 100%;
@@ -26,96 +46,92 @@
   position: relative;
   z-index: 1;
 }
-  body {
-    font-family: system-ui, sans-serif;
-    background: #0b0f1a;
-    color: #e5e7eb;
-    margin: 0;
-    line-height: 1.6;
-  }
-  body {
-    font-family: system-ui, sans-serif;
-    background: #0b0f1a;
-    color: #e5e7eb;
-    margin: 0;
-    line-height: 1.6;
 
-    cursor: url("images/cursor.png") 4 4, auto;
+/* ===== 全局 ===== */
+body {
+  font-family: system-ui, sans-serif;
+  background: #0b0f1a;
+  color: #e5e7eb;
+  margin: 0;
+  line-height: 1.6;
+  cursor: url("images/cursor.png") 4 4, auto;
 }
 
 a, button, .nav-link, #brand {
-    cursor: url("images/pointer.png") 6 0, pointer;
+  cursor: url("images/pointer.png") 6 0, pointer;
 }
 
-  header {
-    position: sticky;
-    top: 0;
-    background: rgba(10, 15, 26, 0.85);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    padding: 10px 20px;
-    display: flex;
-    align-items: center;
-  }
+/* ===== 顶栏 ===== */
+header {
+  position: sticky;
+  top: 0;
+  background: rgba(10, 15, 26, 0.85);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+}
 
-  .nav-left {
-    display: flex;
-    align-items: center;
-  }
+.nav-left {
+  display: flex;
+  align-items: center;
+}
 
-  #brand {
-    font-size: 26px;
-    font-weight: 700;
-    margin-right: 20px;
-    color: #e5e7eb;
-    text-decoration: none;
-  }
+#brand {
+  font-size: 26px;
+  font-weight: 700;
+  margin-right: 20px;
+  color: #e5e7eb;
+  text-decoration: none;
+}
 
-  .nav-link {
-    margin-right: 20px;
-    color: #e5e7eb;
-    text-decoration: none;
-    font-size: 18px;
-    font-weight: 600;
-  }
+.nav-link {
+  margin-right: 20px;
+  color: #e5e7eb;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 600;
+}
 
-  /* 鼠标发光效果（通用） */
-  #brand:hover,
-  .nav-link:hover {
-    color: #ffffff;
-    text-shadow: 0 0 8px #8b5cf6, 0 0 15px #22d3ee;
-    transition: 0.3s;
-  }
+#brand:hover,
+.nav-link:hover {
+  color: #ffffff;
+  text-shadow: 0 0 8px #8b5cf6, 0 0 15px #22d3ee;
+  transition: 0.3s;
+}
 
-  main {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 20px;
-  }
+/* ===== 正文 ===== */
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 20px;
+}
 
-  .hero {
-    text-align: center;
-    padding: 60px 10px;
-  }
+.hero {
+  text-align: center;
+  padding: 60px 10px;
+}
 
-  footer {
-    text-align: center;
-    padding: 20px;
-    color: #94a3b8;
-    font-size: 14px;
-    border-top: 1px solid rgba(255,255,255,0.05);
-  }
+/* ===== 页脚 ===== */
+footer {
+  text-align: center;
+  padding: 20px;
+  color: #94a3b8;
+  font-size: 14px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
 
-  footer a {
-    color: #94a3b8;
-    text-decoration: none;
-  }
- 
+footer a {
+  color: #94a3b8;
+  text-decoration: none;
+}
 </style>
 </head>
 
-<body>
-  <canvas id="galaxy-bg"></canvas>
+<body class="page">
+
+<canvas id="galaxy-bg"></canvas>
 
 <header>
   <div class="nav-left">
@@ -136,13 +152,13 @@ a, button, .nav-link, #brand {
     <h2>简介</h2>
     <p>曾几何时，我在群星下思考，星空如此繁大，个体如此渺小。而天文摄影让我可以瞥见无限宇宙的一角。</p>
     <p>我之所以想做这件事，既因为童年的一个梦想，也因为一些哲学上的思考。</p>
-    <p>小时候，我非常喜欢探索各类天文软件。里面的星云、星系、行星深深吸引着我。即使我们所生活的世界已经足够辽阔，那无边无际的宇宙依然让人心生向往，不是吗？</p>
-    <p>此外，我也总是在思考那些古老而宏大的哲学问题。如果宇宙真的无限，那么地球不过是一粒尘埃，而我们——作为生活在这粒尘埃上的个体——则显得更加渺小。于是那个永恒的疑问便随之而来：生命的意义是什么？宇宙的意义又是什么？</p>
-    <p>每当我仰望星空，我都会产生一种深刻的自我渺小感。或许在我的一生中，永远无法踏上其他星球......但通过相机的镜头，我们仍然能窥见宇宙的一角。而当那些壮丽的星体与闪耀的星云在眼前展开时，我相信那一刻充满了惊叹与思索。也许，在某个漫长的拍摄星空的夜晚，我会慢慢找到那些永恒问题的一个答案。</p>
+    <p>小时候，我非常喜欢探索各类天文软件。里面的星云、星系、行星深深吸引着我。</p>
+    <p>如果宇宙真的无限，那么地球不过是一粒尘埃，而我们作为个体则更加渺小。</p>
+    <p>也许在某个漫长的拍摄星空的夜晚，我会慢慢找到那些永恒问题的一个答案。</p>
   </section>
 </main>
 
-  <section id="comments" style="max-width:960px;margin:0 auto;padding:20px 20px 40px;">
+<section id="comments" style="max-width:960px;margin:0 auto;padding:20px 20px 40px;">
   <h2>评论</h2>
   <script src="https://utteranc.es/client.js"
           repo="Andy330523/stars"
@@ -158,18 +174,36 @@ a, button, .nav-link, #brand {
   <p>联系：<a href="mailto:AndyZhouChudi@outlook.com">AndyZhouChudi@outlook.com</a></p>
   <p>© 2025 CD的星空 · Andy 在星空下搭建。</p>
 </footer>
-<script src="galaxy.js"></script>
-  <script>
-document.addEventListener("DOMContentLoaded", () => {
-    const page = window.location.pathname.split("/").pop();
 
-    document.querySelectorAll("header a").forEach(a => {
-        if (a.getAttribute("href") === page) {
-            a.classList.add("active");
-        }
-    });
+<script src="galaxy.js"></script>
+
+<script>
+/* 当前页面高亮 */
+document.addEventListener("DOMContentLoaded", () => {
+  const page = window.location.pathname.split("/").pop();
+  document.querySelectorAll("header a").forEach(a => {
+    if (a.getAttribute("href") === page) {
+      a.classList.add("active");
+    }
+  });
+});
+
+/* mac 桌面式页面切换 + 星空冻结 */
+document.querySelectorAll("header a").forEach(link => {
+  link.addEventListener("click", e => {
+    const href = link.getAttribute("href");
+    if (!href || href.startsWith("#")) return;
+
+    e.preventDefault();
+    document.body.classList.add("page-exit");
+    window.dispatchEvent(new Event("page-exit"));
+
+    setTimeout(() => {
+      window.location.href = href;
+    }, 500);
+  });
 });
 </script>
-  
+
 </body>
 </html>
