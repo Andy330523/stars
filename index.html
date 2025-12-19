@@ -6,16 +6,9 @@
 <title>CD的星空 – 天文摄影</title>
 
 <style>
-/* ===== 页面切换动画（mac 桌面风格） ===== */
-
-
-.page-exit {
+/* ===== 页面切换动画（只作用在内容层） ===== */
+.page-exit .page-content {
   animation: slideOut 0.5s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
-}
-
-@keyframes slideIn {
-  from { transform: translateX(100%); }
-  to   { transform: translateX(0); }
 }
 
 @keyframes slideOut {
@@ -23,7 +16,7 @@
   to   { transform: translateX(-100%); }
 }
 
-/* ===== 当前页面导航项常亮 ===== */
+/* ===== 当前页面导航高亮 ===== */
 .nav-link.active,
 #brand.active {
   color: #ffffff;
@@ -40,6 +33,7 @@
   display: block;
 }
 
+/* ===== 内容层 ===== */
 .page-content {
   position: relative;
   z-index: 1;
@@ -129,7 +123,11 @@ footer a {
 
 <body>
 
+<!-- 星空背景（永远不参与动画） -->
 <canvas id="galaxy-bg"></canvas>
+
+<!-- 页面内容（唯一会滑动的部分） -->
+<div class="page-content">
 
 <header>
   <div class="nav-left">
@@ -173,6 +171,8 @@ footer a {
   <p>© 2025 CD的星空 · Andy 在星空下搭建。</p>
 </footer>
 
+</div> <!-- /.page-content -->
+
 <script src="galaxy.js"></script>
 
 <script>
@@ -186,7 +186,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-/* mac 桌面式页面切换 + 星空冻结 */
+/* 页面切换：一次滑出 + 星空冻结 */
 document.querySelectorAll("header a").forEach(link => {
   link.addEventListener("click", e => {
     const href = link.getAttribute("href");
