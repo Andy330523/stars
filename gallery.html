@@ -6,16 +6,9 @@
 <title>作品集</title>
 
 <style>
-/* ===== 页面切换动画（mac 桌面风格） ===== */
-
-
-.page-exit {
+/* ===== 页面切换动画（只作用在内容层） ===== */
+.page-exit .page-content {
   animation: slideOut 0.5s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
-}
-
-@keyframes slideIn {
-  from { transform: translateX(100%); }
-  to   { transform: translateX(0); }
 }
 
 @keyframes slideOut {
@@ -40,6 +33,12 @@
   display: block;
 }
 
+/* ===== 页面内容层 ===== */
+.page-content {
+  position: relative;
+  z-index: 1;
+}
+
 /* ===== 全局 ===== */
 body {
   font-family: system-ui, sans-serif;
@@ -52,12 +51,6 @@ body {
 
 a, button, .nav-link, #brand {
   cursor: url("images/pointer.png") 6 0, pointer;
-}
-
-/* ===== 正文容器（盖在星空上） ===== */
-.page-content {
-  position: relative;
-  z-index: 1;
 }
 
 /* ===== 顶栏 ===== */
@@ -125,10 +118,10 @@ footer a {
 
 <body>
 
-<!-- 星空背景 -->
+<!-- 星空背景（永远不参与动画） -->
 <canvas id="galaxy-bg"></canvas>
 
-<!-- 正文层 -->
+<!-- 页面内容（唯一会滑动的部分） -->
 <div class="page-content">
 
 <header>
@@ -142,7 +135,7 @@ footer a {
 
 <main>
   <h1>作品集</h1>
-  <p>暂无......</p>
+  <p>暂无……</p>
 </main>
 
 <section id="comments" style="max-width:960px;margin:0 auto;padding:20px 20px 40px;">
@@ -177,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-/* mac 桌面式页面切换 + 星空冻结 */
+/* 页面切换：一次滑出 + 星空冻结 */
 document.querySelectorAll("header a").forEach(link => {
   link.addEventListener("click", e => {
     const href = link.getAttribute("href");
