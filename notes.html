@@ -6,14 +6,34 @@
 <title>一些碎碎念...</title>
 
 <style>
-  /* 当前页面导航项常亮 */
+/* ===== 页面切换动画（mac 桌面风格） ===== */
+.page {
+  animation: slideIn 0.5s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+}
+
+.page-exit {
+  animation: slideOut 0.5s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
+
+@keyframes slideOut {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100%); }
+}
+
+/* ===== 当前页面导航高亮 ===== */
 .nav-link.active,
 #brand.active {
-    color: #ffffff;
-    text-shadow: 0 0 8px #8b5cf6, 0 0 15px #22d3ee;
+  color: #ffffff;
+  text-shadow: 0 0 8px #8b5cf6, 0 0 15px #22d3ee;
 }
-  
-  #galaxy-bg {
+
+/* ===== 星空背景 ===== */
+#galaxy-bg {
   position: fixed;
   inset: 0;
   width: 100%;
@@ -22,96 +42,86 @@
   display: block;
 }
 
-.page-content {
-  position: relative;
-  z-index: 1;
-}
-  
-  body {
-    font-family: system-ui, sans-serif;
-    background: #0b0f1a;
-    color: #e5e7eb;
-    margin: 0;
-    line-height: 1.6;
-  }
-  body {
-    font-family: system-ui, sans-serif;
-    background: #0b0f1a;
-    color: #e5e7eb;
-    margin: 0;
-    line-height: 1.6;
-
-    cursor: url("images/cursor.png") 4 4, auto;
+/* ===== 全局 ===== */
+body {
+  font-family: system-ui, sans-serif;
+  background: #0b0f1a;
+  color: #e5e7eb;
+  margin: 0;
+  line-height: 1.6;
+  cursor: url("images/cursor.png") 4 4, auto;
 }
 
 a, button, .nav-link, #brand {
-    cursor: url("images/pointer.png") 6 0, pointer;
+  cursor: url("images/pointer.png") 6 0, pointer;
 }
-  
 
-  header {
-    position: sticky;
-    top: 0;
-    background: rgba(10, 15, 26, 0.85);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    padding: 10px 20px;
-    display: flex;
-    align-items: center;
-  }
+/* ===== 顶栏 ===== */
+header {
+  position: sticky;
+  top: 0;
+  background: rgba(10, 15, 26, 0.85);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+}
 
-  .nav-left {
-    display: flex;
-    align-items: center;
-  }
+.nav-left {
+  display: flex;
+  align-items: center;
+}
 
-  #brand {
-    font-size: 26px;
-    font-weight: 700;
-    margin-right: 20px;
-    color: #e5e7eb;
-    text-decoration: none;
-  }
+#brand {
+  font-size: 26px;
+  font-weight: 700;
+  margin-right: 20px;
+  color: #e5e7eb;
+  text-decoration: none;
+}
 
-  .nav-link {
-    margin-right: 20px;
-    color: #e5e7eb;
-    text-decoration: none;
-    font-size: 18px;
-    font-weight: 600;
-  }
+.nav-link {
+  margin-right: 20px;
+  color: #e5e7eb;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 600;
+}
 
-  #brand:hover,
-  .nav-link:hover {
-    color: #ffffff;
-    text-shadow: 0 0 8px #8b5cf6, 0 0 15px #22d3ee;
-    transition: 0.3s;
-  }
+#brand:hover,
+.nav-link:hover {
+  color: #ffffff;
+  text-shadow: 0 0 8px #8b5cf6, 0 0 15px #22d3ee;
+  transition: 0.3s;
+}
 
-  main {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 40px 20px;
-  }
+/* ===== 正文 ===== */
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
 
-  footer {
-    text-align: center;
-    padding: 20px;
-    color: #94a3b8;
-    font-size: 14px;
-    border-top: 1px solid rgba(255,255,255,0.05);
-  }
+/* ===== 页脚 ===== */
+footer {
+  text-align: center;
+  padding: 20px;
+  color: #94a3b8;
+  font-size: 14px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
 
-  footer a {
-    color: #94a3b8;
-    text-decoration: none;
-  }
+footer a {
+  color: #94a3b8;
+  text-decoration: none;
+}
 </style>
 </head>
 
-<body>
-  <canvas id="galaxy-bg"></canvas>
-  
+<body class="page">
+
+<canvas id="galaxy-bg"></canvas>
 
 <header>
   <div class="nav-left">
@@ -124,9 +134,18 @@ a, button, .nav-link, #brand {
 
 <main>
   <h1>一些碎碎念...</h1>
-  <p>这个capstone真的是相当曲折。我本来是想就学习一些天文知识然后去拍片，但是我又需要一个网站来承载我的照片和故事，所以我又需要学习如何去搭建和维护一个网站，然后我又想拍个视频来记录这一切，所以我又需要去学习达芬奇。最后我还想去甘肃去拍摄最纯净的天空，所以我又去考了个驾照......</p>
+  <p>
+    这个 capstone 真的是相当曲折。
+    我本来是想就学习一些天文知识然后去拍片，但是我又需要一个网站来承载我的照片和故事，
+    所以我又需要学习如何去搭建和维护一个网站，
+    然后我又想拍个视频来记录这一切，
+    所以我又需要去学习达芬奇。
+    最后我还想去甘肃去拍摄最纯净的天空，
+    所以我又去考了个驾照......
+  </p>
 </main>
-  <section id="comments" style="max-width:960px;margin:0 auto;padding:20px 20px 40px;">
+
+<section id="comments" style="max-width:960px;margin:0 auto;padding:20px 20px 40px;">
   <h2>评论</h2>
   <script src="https://utteranc.es/client.js"
           repo="Andy330523/stars"
@@ -142,16 +161,33 @@ a, button, .nav-link, #brand {
   <p>联系：<a href="mailto:AndyZhouChudi@outlook.com">AndyZhouChudi@outlook.com</a></p>
   <p>© 2025 CD的星空 · Andy 在星空下搭建。</p>
 </footer>
-  <script src="galaxy.js"></script>
-  <script>
-document.addEventListener("DOMContentLoaded", () => {
-    const page = window.location.pathname.split("/").pop();
 
-    document.querySelectorAll("header a").forEach(a => {
-        if (a.getAttribute("href") === page) {
-            a.classList.add("active");
-        }
-    });
+<script src="galaxy.js"></script>
+
+<script>
+/* 当前页面高亮 */
+document.addEventListener("DOMContentLoaded", () => {
+  const page = window.location.pathname.split("/").pop();
+  document.querySelectorAll("header a").forEach(a => {
+    if (a.getAttribute("href") === page) {
+      a.classList.add("active");
+    }
+  });
+});
+
+/* 页面切换动画 */
+document.querySelectorAll("header a").forEach(link => {
+  link.addEventListener("click", e => {
+    const href = link.getAttribute("href");
+    if (!href || href.startsWith("#")) return;
+
+    e.preventDefault();
+    document.body.classList.add("page-exit");
+
+    setTimeout(() => {
+      window.location.href = href;
+    }, 500);
+  });
 });
 </script>
 
