@@ -6,15 +6,9 @@
 <title>一些碎碎念...</title>
 
 <style>
-/* ===== 页面切换动画（mac 桌面风格） ===== */
-
-.page-exit {
+/* ===== 页面切换动画（只做离开，一次完成） ===== */
+.page-exit .page-content {
   animation: slideOut 0.5s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
-}
-
-@keyframes slideIn {
-  from { transform: translateX(100%); }
-  to   { transform: translateX(0); }
 }
 
 @keyframes slideOut {
@@ -37,6 +31,12 @@
   height: 100%;
   z-index: -1;
   display: block;
+}
+
+/* ===== 页面内容层 ===== */
+.page-content {
+  position: relative;
+  z-index: 1;
 }
 
 /* ===== 全局 ===== */
@@ -118,7 +118,11 @@ footer a {
 
 <body>
 
+<!-- 星空背景（永远不参与动画） -->
 <canvas id="galaxy-bg"></canvas>
+
+<!-- 页面内容（唯一会被滑动的部分） -->
+<div class="page-content">
 
 <header>
   <div class="nav-left">
@@ -133,12 +137,13 @@ footer a {
   <h1>一些碎碎念...</h1>
   <p>
     这个 capstone 真的是相当曲折。
-    我本来是想就学习一些天文知识然后去拍片，但是我又需要一个网站来承载我的照片和故事，
-    所以我又需要学习如何去搭建和维护一个网站，
-    然后我又想拍个视频来记录这一切，
+    我本来是想就学习一些天文知识然后去拍片，
+    但是我又需要一个网站来承载我的照片和故事，
+    所以我又需要学习如何去搭建和维护一个网站。
+    后来我又想拍个视频来记录这一切，
     所以我又需要去学习达芬奇。
-    最后我还想去甘肃去拍摄最纯净的天空，
-    所以我又去考了个驾照......
+    最后我还想去川西拍摄最纯净的天空，
+    所以我又去考了个驾照……
   </p>
 </main>
 
@@ -159,10 +164,12 @@ footer a {
   <p>© 2025 CD的星空 · Andy 在星空下搭建。</p>
 </footer>
 
+</div> <!-- /.page-content -->
+
 <script src="galaxy.js"></script>
 
 <script>
-/* 当前页面高亮 */
+/* 当前页面导航高亮 */
 document.addEventListener("DOMContentLoaded", () => {
   const page = window.location.pathname.split("/").pop();
   document.querySelectorAll("header a").forEach(a => {
@@ -172,7 +179,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-/* 页面切换动画 */
+/* 页面切换：一次滑出 + 星空冻结 */
 document.querySelectorAll("header a").forEach(link => {
   link.addEventListener("click", e => {
     const href = link.getAttribute("href");
@@ -180,6 +187,7 @@ document.querySelectorAll("header a").forEach(link => {
 
     e.preventDefault();
     document.body.classList.add("page-exit");
+    window.dispatchEvent(new Event("page-exit"));
 
     setTimeout(() => {
       window.location.href = href;
