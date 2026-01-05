@@ -6,6 +6,17 @@
 <title>一些碎碎念...</title>
 
 <style>
+  .img-figure {
+  margin: 24px auto;
+  max-width: 800px;
+  text-align: center;
+}
+
+.img-figure figcaption {
+  margin-top: 6px;
+  font-size: 13px;
+  color: #94a3b8;
+}
   .article-img {
   width: 100%;
   max-width: 800px;
@@ -174,11 +185,17 @@ footer a {
   </p>
   <h3>仅此而已吗？ </h3>
   <p>不尽然，天文相机还有一个明显的优势，那就是对红外光的接受能力。</p>
+ <figure class="img-figure">
   <img src="images/light.jpeg" alt="光谱图" class="article-img">
+  <figcaption>光谱图</figcaption>
+</figure>
   <p>我们知道，氢元素和硫元素的峰值波段在 656nm和672nm 左右，
     但是正常相机的cmos,有一红外截止滤光片 
     这会削减650nm以上的红光，完全截止700nm以上的红外光,导致普通相机在天文摄影中会严重低估乃至拍不到氢、硫主导的星云结构。</p>
-   <img src="images/compare.png" alt="对比如上" class="article-img">
+  <figure class="img-figure">
+  <img src="images/compare.png" alt="对比如上" class="article-img">
+  <figcaption>对比如上</figcaption>
+</figure>
 </main>
 
 <section id="comments" style="max-width:960px;margin:0 auto;padding:20px 20px 40px;">
