@@ -135,6 +135,7 @@
   border:none;
   color:#e5e7eb;
   font-size:28px;
+  cursor:url("images/pointer.png") 6 0, pointer;
 }
 
 .info-panel-content{
@@ -189,6 +190,7 @@ body{
   background:#0b0f1a;
   color:#e5e7eb;
   margin:0;
+  line-height:1.6;
   cursor:url("images/cursor.png") 4 4,auto;
 }
 
@@ -204,6 +206,7 @@ header{
   border-bottom:1px solid rgba(255,255,255,0.05);
   padding:10px 20px;
   display:flex;
+  align-items:center;
 }
 
 .nav-left{
@@ -227,6 +230,21 @@ header{
   font-weight:600;
 }
 
+/* 当前页面常亮 */
+.nav-link.active,
+#brand.active{
+  color:#ffffff;
+  text-shadow:0 0 8px #8b5cf6, 0 0 15px #22d3ee;
+}
+
+/* 鼠标悬浮发光 */
+#brand:hover,
+.nav-link:hover{
+  color:#ffffff;
+  text-shadow:0 0 8px #8b5cf6, 0 0 15px #22d3ee;
+  transition:0.3s;
+}
+
 main{
   max-width:960px;
   margin:0 auto;
@@ -247,7 +265,6 @@ footer a{
 }
 
 @media (max-width:900px){
-
   .work-title-btn{
     font-size:32px;
   }
@@ -260,7 +277,6 @@ footer a{
     width:150px;
     height:150px;
   }
-
 }
 
 </style>
@@ -347,7 +363,7 @@ async>
 
 <div class="info-item">
 <span class="info-label">拍摄设备</span>
-<span class="info-value">锐星 91F/ ZWO 2600MC Pro/晴空 ST17-R </span>
+<span class="info-value">锐星 91F / ZWO 2600MC Pro / 晴空 ST17-R</span>
 </div>
 
 </div>
@@ -358,88 +374,86 @@ async>
 <script src="galaxy.js"></script>
 
 <script>
+document.addEventListener("DOMContentLoaded", () => {
 
-document.addEventListener("DOMContentLoaded",()=>{
+  const imageBox = document.getElementById("imageBox");
+  const mainImage = document.getElementById("mainImage");
+  const resultBox = document.getElementById("resultBox");
 
-const imageBox=document.getElementById("imageBox")
-const mainImage=document.getElementById("mainImage")
-const resultBox=document.getElementById("resultBox")
+  const zoomLevel = 3;
 
-const zoomLevel=3
+  function moveZoomPreview(e){
+    const rect = mainImage.getBoundingClientRect();
 
-function moveZoomPreview(e){
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
 
-const rect=mainImage.getBoundingClientRect()
+    const previewWidth = resultBox.offsetWidth;
+    const previewHeight = resultBox.offsetHeight;
 
-const x=e.clientX-rect.left
-const y=e.clientY-rect.top
+    let previewX = x + 24;
+    let previewY = y + 24;
 
-const previewWidth=resultBox.offsetWidth
-const previewHeight=resultBox.offsetHeight
+    if (previewX + previewWidth > rect.width){
+      previewX = x - previewWidth - 24;
+    }
 
-let previewX=x+24
-let previewY=y+24
+    if (previewY + previewHeight > rect.height){
+      previewY = y - previewHeight - 24;
+    }
 
-if(previewX+previewWidth>rect.width){
-previewX=x-previewWidth-24
-}
+    if (previewX < 0) previewX = 12;
+    if (previewY < 0) previewY = 12;
 
-if(previewY+previewHeight>rect.height){
-previewY=y-previewHeight-24
-}
+    resultBox.style.left = previewX + "px";
+    resultBox.style.top = previewY + "px";
 
-if(previewX<0)previewX=12
-if(previewY<0)previewY=12
+    const bgPosX = -((x * zoomLevel) - previewWidth / 2);
+    const bgPosY = -((y * zoomLevel) - previewHeight / 2);
 
-resultBox.style.left=previewX+"px"
-resultBox.style.top=previewY+"px"
+    resultBox.style.backgroundImage = `url('${mainImage.src}')`;
+    resultBox.style.backgroundSize = `${rect.width * zoomLevel}px ${rect.height * zoomLevel}px`;
+    resultBox.style.backgroundPosition = `${bgPosX}px ${bgPosY}px`;
+  }
 
-const bgPosX=-((x*zoomLevel)-previewWidth/2)
-const bgPosY=-((y*zoomLevel)-previewHeight/2)
+  if (imageBox){
+    imageBox.addEventListener("mouseenter", () => {
+      resultBox.style.display = "block";
+    });
 
-resultBox.style.backgroundImage=`url('${mainImage.src}')`
-resultBox.style.backgroundSize=`${rect.width*zoomLevel}px ${rect.height*zoomLevel}px`
-resultBox.style.backgroundPosition=`${bgPosX}px ${bgPosY}px`
+    imageBox.addEventListener("mouseleave", () => {
+      resultBox.style.display = "none";
+    });
 
-}
+    imageBox.addEventListener("mousemove", moveZoomPreview);
+  }
 
-if(imageBox){
+  const openBtn = document.getElementById("openInfoBtn");
+  const closeBtn = document.getElementById("closeInfoBtn");
+  const panel = document.getElementById("infoPanel");
+  const overlay = document.getElementById("infoOverlay");
 
-imageBox.addEventListener("mouseenter",()=>{
-resultBox.style.display="block"
-})
+  function openPanel(){
+    panel.classList.add("show");
+    overlay.classList.add("show");
+  }
 
-imageBox.addEventListener("mouseleave",()=>{
-resultBox.style.display="none"
-})
+  function closePanel(){
+    panel.classList.remove("show");
+    overlay.classList.remove("show");
+  }
 
-imageBox.addEventListener("mousemove",moveZoomPreview)
+  openBtn.addEventListener("click", openPanel);
+  closeBtn.addEventListener("click", closePanel);
+  overlay.addEventListener("click", closePanel);
 
-}
-
-/* 详细信息面板 */
-
-const openBtn=document.getElementById("openInfoBtn")
-const closeBtn=document.getElementById("closeInfoBtn")
-const panel=document.getElementById("infoPanel")
-const overlay=document.getElementById("infoOverlay")
-
-function openPanel(){
-panel.classList.add("show")
-overlay.classList.add("show")
-}
-
-function closePanel(){
-panel.classList.remove("show")
-overlay.classList.remove("show")
-}
-
-openBtn.addEventListener("click",openPanel)
-closeBtn.addEventListener("click",closePanel)
-overlay.addEventListener("click",closePanel)
-
-})
-
+  const page = window.location.pathname.split("/").pop();
+  document.querySelectorAll("header a").forEach(a => {
+    if (a.getAttribute("href") === page) {
+      a.classList.add("active");
+    }
+  });
+});
 </script>
 
 </body>
