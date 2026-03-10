@@ -7,6 +7,44 @@
 
 <style>
 /* ===== 放大图与信息面板 ===== */
+  .work-title-wrap{
+  margin-bottom:24px;
+}
+
+.work-title-btn{
+  position:relative;
+  background:none;
+  border:none;
+  padding:0 0 8px 0;
+  color:#e5e7eb;
+  font-size:34px;
+  font-weight:700;
+  letter-spacing:0.5px;
+  cursor:url("images/pointer.png") 6 0, pointer;
+}
+
+.work-title-btn::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:0;
+  width:100%;
+  height:2px;
+  background:linear-gradient(90deg, #8b5cf6, #22d3ee);
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform 0.3s ease;
+  box-shadow:0 0 8px rgba(34,211,238,0.35);
+}
+
+.work-title-btn:hover::after{
+  transform:scaleX(1);
+}
+
+.work-title-btn:hover{
+  color:#ffffff;
+  text-shadow:0 0 8px #8b5cf6, 0 0 15px #22d3ee;
+}
 .zoom-wrapper{
   display:flex;
   gap:24px;
@@ -290,23 +328,21 @@ footer a {
 
 <main>
   <section class="zoom-section">
-    <h1>精选作品</h1>
+    <div class="work-title-wrap">
+      <button id="openInfoBtn" class="work-title-btn">M81 &amp; M82</button>
+    </div>
 
     <div class="zoom-wrapper">
       <div class="image-box" id="imageBox">
-        <img src="images/M81.jpeg" alt="M81 Galaxy" id="mainImage">
+        <img src="images/M81.jpeg" alt="M81 and M82" id="mainImage">
         <div class="lens" id="lens"></div>
       </div>
 
       <div class="result-box" id="resultBox"></div>
     </div>
-
-    <div class="info-button-wrap">
-      <button id="openInfoBtn" class="info-btn">详细信息</button>
-    </div>
   </section>
 </main>
-
+  
 <section id="comments" style="max-width:960px;margin:0 auto;padding:20px 20px 40px;">
   <h2>评论</h2>
   <script src="https://utteranc.es/client.js"
