@@ -6,6 +6,163 @@
 <title>作品集</title>
 
 <style>
+/* ===== 放大图与信息面板 ===== */
+.zoom-wrapper{
+  display:flex;
+  gap:24px;
+  align-items:flex-start;
+  flex-wrap:wrap;
+}
+
+.image-box{
+  position:relative;
+  width:100%;
+  max-width:620px;
+  border-radius:16px;
+  overflow:hidden;
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.08);
+  box-shadow:0 0 20px rgba(0,0,0,0.25);
+}
+
+.image-box img{
+  width:100%;
+  display:block;
+}
+
+.lens{
+  position:absolute;
+  width:140px;
+  height:140px;
+  border:2px solid rgba(255,255,255,0.85);
+  background:rgba(255,255,255,0.08);
+  box-shadow:0 0 12px rgba(255,255,255,0.15);
+  border-radius:12px;
+  pointer-events:none;
+  display:none;
+}
+
+.result-box{
+  width:320px;
+  height:320px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,0.08);
+  background-color:rgba(255,255,255,0.03);
+  background-repeat:no-repeat;
+  background-position:center;
+  box-shadow:0 0 20px rgba(0,0,0,0.25);
+  display:none;
+}
+
+.info-button-wrap{
+  margin-top:24px;
+}
+
+.info-btn{
+  background:rgba(255,255,255,0.06);
+  color:#e5e7eb;
+  border:1px solid rgba(255,255,255,0.12);
+  padding:12px 20px;
+  border-radius:12px;
+  font-size:15px;
+  font-weight:600;
+  transition:0.3s;
+}
+
+.info-btn:hover{
+  background:rgba(255,255,255,0.12);
+  box-shadow:0 0 12px rgba(139,92,246,0.35);
+}
+
+.info-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.45);
+  backdrop-filter:blur(3px);
+  opacity:0;
+  visibility:hidden;
+  transition:0.35s;
+  z-index:20;
+}
+
+.info-overlay.show{
+  opacity:1;
+  visibility:visible;
+}
+
+.info-panel{
+  position:fixed;
+  top:0;
+  right:0;
+  width:380px;
+  max-width:90vw;
+  height:100vh;
+  background:rgba(10,15,26,0.96);
+  border-left:1px solid rgba(255,255,255,0.08);
+  box-shadow:-10px 0 30px rgba(0,0,0,0.35);
+  transform:translateX(100%);
+  transition:transform 0.35s ease;
+  z-index:30;
+  display:flex;
+  flex-direction:column;
+}
+
+.info-panel.show{
+  transform:translateX(0);
+}
+
+.info-panel-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px 20px 16px;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
+
+.info-panel-header h2{
+  margin:0;
+  font-size:22px;
+}
+
+.close-btn{
+  background:none;
+  border:none;
+  color:#e5e7eb;
+  font-size:28px;
+  line-height:1;
+}
+
+.info-panel-content{
+  padding:20px;
+  overflow-y:auto;
+}
+
+.info-item{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  padding:14px 0;
+  border-bottom:1px solid rgba(255,255,255,0.05);
+}
+
+.info-label{
+  font-size:13px;
+  color:#94a3b8;
+}
+
+.info-value{
+  font-size:16px;
+  color:#e5e7eb;
+}
+
+@media (max-width: 900px){
+  .result-box{
+    width:100%;
+    max-width:620px;
+    height:260px;
+  }
+}
+
 /* ===== 页面切换动画（只作用在内容层） ===== */
 .page-exit .page-content {
   animation: slideOut 0.5s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
@@ -118,10 +275,8 @@ footer a {
 
 <body>
 
-<!-- 星空背景（永远不参与动画） -->
 <canvas id="galaxy-bg"></canvas>
 
-<!-- 页面内容（唯一会滑动的部分） -->
 <div class="page-content">
 
 <header>
@@ -134,8 +289,22 @@ footer a {
 </header>
 
 <main>
-  <h1>作品集</h1>
-  <p>暂无……</p>
+  <section class="zoom-section">
+    <h1>精选作品</h1>
+
+    <div class="zoom-wrapper">
+      <div class="image-box" id="imageBox">
+        <img src="images/M81.jpeg" alt="M81 Galaxy" id="mainImage">
+        <div class="lens" id="lens"></div>
+      </div>
+
+      <div class="result-box" id="resultBox"></div>
+    </div>
+
+    <div class="info-button-wrap">
+      <button id="openInfoBtn" class="info-btn">详细信息</button>
+    </div>
+  </section>
 </main>
 
 <section id="comments" style="max-width:960px;margin:0 auto;padding:20px 20px 40px;">
@@ -155,35 +324,141 @@ footer a {
   <p>© 2025 CD的星空 · Andy 在星空下搭建。</p>
 </footer>
 
-</div> <!-- /.page-content -->
+</div>
+
+<div class="info-panel" id="infoPanel">
+  <div class="info-panel-header">
+    <h2>详细信息</h2>
+    <button id="closeInfoBtn" class="close-btn">×</button>
+  </div>
+
+  <div class="info-panel-content">
+    <div class="info-item">
+      <span class="info-label">目标</span>
+      <span class="info-value">M81 Galaxy</span>
+    </div>
+
+    <div class="info-item">
+      <span class="info-label">拍摄位置</span>
+      <span class="info-value">103.691944</span>
+    </div>
+
+    <div class="info-item">
+      <span class="info-label">单张曝光</span>
+      <span class="info-value">300s</span>
+    </div>
+
+    <div class="info-item">
+      <span class="info-label">堆叠张数</span>
+      <span class="info-value">40</span>
+    </div>
+
+    <div class="info-item">
+      <span class="info-label">拍摄设备</span>
+      <span class="info-value">请填写你的主镜 / 相机 / 赤道仪</span>
+    </div>
+  </div>
+</div>
+
+<div class="info-overlay" id="infoOverlay"></div>
 
 <script src="galaxy.js"></script>
 
 <script>
-/* 当前页面高亮 */
 document.addEventListener("DOMContentLoaded", () => {
+  /* 当前页面高亮 */
   const page = window.location.pathname.split("/").pop();
   document.querySelectorAll("header a").forEach(a => {
     if (a.getAttribute("href") === page) {
       a.classList.add("active");
     }
   });
-});
 
-/* 页面切换：一次滑出 + 星空冻结 */
-document.querySelectorAll("header a").forEach(link => {
-  link.addEventListener("click", e => {
-    const href = link.getAttribute("href");
-    if (!href || href.startsWith("#")) return;
+  /* 页面切换：一次滑出 + 星空冻结 */
+  document.querySelectorAll("header a").forEach(link => {
+    link.addEventListener("click", e => {
+      const href = link.getAttribute("href");
+      if (!href || href.startsWith("#")) return;
 
-    e.preventDefault();
-    document.body.classList.add("page-exit");
-    window.dispatchEvent(new Event("page-exit"));
+      e.preventDefault();
+      document.body.classList.add("page-exit");
+      window.dispatchEvent(new Event("page-exit"));
 
-    setTimeout(() => {
-      window.location.href = href;
-    }, 500);
+      setTimeout(() => {
+        window.location.href = href;
+      }, 500);
+    });
   });
+
+  /* 图片放大 */
+  const imageBox = document.getElementById("imageBox");
+  const mainImage = document.getElementById("mainImage");
+  const lens = document.getElementById("lens");
+  const resultBox = document.getElementById("resultBox");
+
+  const zoomLevel = 2.5;
+
+  function moveLens(e) {
+    const rect = mainImage.getBoundingClientRect();
+
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const lensWidth = lens.offsetWidth;
+    const lensHeight = lens.offsetHeight;
+
+    let lensX = x - lensWidth / 2;
+    let lensY = y - lensHeight / 2;
+
+    if (lensX < 0) lensX = 0;
+    if (lensY < 0) lensY = 0;
+    if (lensX > rect.width - lensWidth) lensX = rect.width - lensWidth;
+    if (lensY > rect.height - lensHeight) lensY = rect.height - lensHeight;
+
+    lens.style.left = lensX + "px";
+    lens.style.top = lensY + "px";
+
+    const bgX = -(lensX * zoomLevel);
+    const bgY = -(lensY * zoomLevel);
+
+    resultBox.style.backgroundImage = `url('${mainImage.src}')`;
+    resultBox.style.backgroundSize = `${rect.width * zoomLevel}px ${rect.height * zoomLevel}px`;
+    resultBox.style.backgroundPosition = `${bgX}px ${bgY}px`;
+  }
+
+  if (imageBox && mainImage && lens && resultBox) {
+    imageBox.addEventListener("mouseenter", () => {
+      lens.style.display = "block";
+      resultBox.style.display = "block";
+    });
+
+    imageBox.addEventListener("mouseleave", () => {
+      lens.style.display = "none";
+      resultBox.style.display = "none";
+    });
+
+    imageBox.addEventListener("mousemove", moveLens);
+  }
+
+  /* 详细信息弹窗 */
+  const openInfoBtn = document.getElementById("openInfoBtn");
+  const closeInfoBtn = document.getElementById("closeInfoBtn");
+  const infoPanel = document.getElementById("infoPanel");
+  const infoOverlay = document.getElementById("infoOverlay");
+
+  function openPanel() {
+    infoPanel.classList.add("show");
+    infoOverlay.classList.add("show");
+  }
+
+  function closePanel() {
+    infoPanel.classList.remove("show");
+    infoOverlay.classList.remove("show");
+  }
+
+  if (openInfoBtn) openInfoBtn.addEventListener("click", openPanel);
+  if (closeInfoBtn) closeInfoBtn.addEventListener("click", closePanel);
+  if (infoOverlay) infoOverlay.addEventListener("click", closePanel);
 });
 </script>
 
