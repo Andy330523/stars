@@ -6,6 +6,7 @@
 <title>作品集</title>
 
 <style>
+
 /* ===== 作品标题 ===== */
 .work-title-wrap{
   margin-bottom:24px;
@@ -33,23 +34,17 @@
   bottom:0;
   width:100%;
   height:2px;
-  background:linear-gradient(90deg, #8b5cf6, #22d3ee);
+  background:linear-gradient(90deg,#8b5cf6,#22d3ee);
   transform:scaleX(0);
   transform-origin:left;
   transition:transform 0.3s ease;
-  box-shadow:0 0 8px rgba(34,211,238,0.35);
 }
 
 .work-title-btn:hover::after{
   transform:scaleX(1);
 }
 
-.work-title-btn:hover{
-  color:#ffffff;
-  text-shadow:0 0 8px #8b5cf6, 0 0 15px #22d3ee;
-}
-
-/* ===== 图片展示与鼠标跟随放大窗 ===== */
+/* ===== 图片展示与鼠标放大 ===== */
 .zoom-wrapper{
   display:block;
 }
@@ -126,7 +121,7 @@
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:20px 20px 16px;
+  padding:20px;
   border-bottom:1px solid rgba(255,255,255,0.06);
 }
 
@@ -140,12 +135,10 @@
   border:none;
   color:#e5e7eb;
   font-size:28px;
-  line-height:1;
 }
 
 .info-panel-content{
   padding:20px;
-  overflow-y:auto;
 }
 
 .info-item{
@@ -166,115 +159,95 @@
   color:#e5e7eb;
 }
 
-/* ===== 页面切换动画 ===== */
-.page-exit .page-content {
-  animation: slideOut 0.5s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+/* ===== 页面动画 ===== */
+.page-exit .page-content{
+  animation:slideOut 0.5s forwards;
 }
 
-@keyframes slideOut {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-100%); }
-}
-
-/* ===== 当前页面导航高亮 ===== */
-.nav-link.active,
-#brand.active {
-  color: #ffffff;
-  text-shadow: 0 0 8px #8b5cf6, 0 0 15px #22d3ee;
+@keyframes slideOut{
+  from{transform:translateX(0);}
+  to{transform:translateX(-100%);}
 }
 
 /* ===== 星空背景 ===== */
-#galaxy-bg {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  display: block;
+#galaxy-bg{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:-1;
 }
 
-/* ===== 页面内容层 ===== */
-.page-content {
-  position: relative;
-  z-index: 1;
+/* ===== 页面布局 ===== */
+.page-content{
+  position:relative;
+  z-index:1;
 }
 
-/* ===== 全局 ===== */
-body {
-  font-family: system-ui, sans-serif;
-  background: #0b0f1a;
-  color: #e5e7eb;
-  margin: 0;
-  line-height: 1.6;
-  cursor: url("images/cursor.png") 4 4, auto;
+body{
+  font-family:system-ui,sans-serif;
+  background:#0b0f1a;
+  color:#e5e7eb;
+  margin:0;
+  cursor:url("images/cursor.png") 4 4,auto;
 }
 
-a, button, .nav-link, #brand {
-  cursor: url("images/pointer.png") 6 0, pointer;
+a,button,.nav-link,#brand{
+  cursor:url("images/pointer.png") 6 0,pointer;
 }
 
-/* ===== 顶栏 ===== */
-header {
-  position: sticky;
-  top: 0;
-  background: rgba(10, 15, 26, 0.85);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-  padding: 10px 20px;
-  display: flex;
-  align-items: center;
+header{
+  position:sticky;
+  top:0;
+  background:rgba(10,15,26,0.85);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid rgba(255,255,255,0.05);
+  padding:10px 20px;
+  display:flex;
 }
 
-.nav-left {
-  display: flex;
-  align-items: center;
+.nav-left{
+  display:flex;
+  align-items:center;
 }
 
-#brand {
-  font-size: 26px;
-  font-weight: 700;
-  margin-right: 20px;
-  color: #e5e7eb;
-  text-decoration: none;
+#brand{
+  font-size:26px;
+  font-weight:700;
+  margin-right:20px;
+  color:#e5e7eb;
+  text-decoration:none;
 }
 
-.nav-link {
-  margin-right: 20px;
-  color: #e5e7eb;
-  text-decoration: none;
-  font-size: 18px;
-  font-weight: 600;
+.nav-link{
+  margin-right:20px;
+  color:#e5e7eb;
+  text-decoration:none;
+  font-size:18px;
+  font-weight:600;
 }
 
-#brand:hover,
-.nav-link:hover {
-  color: #ffffff;
-  text-shadow: 0 0 8px #8b5cf6, 0 0 15px #22d3ee;
-  transition: 0.3s;
+main{
+  max-width:960px;
+  margin:0 auto;
+  padding:40px 20px;
 }
 
-/* ===== 正文 ===== */
-main {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 40px 20px;
+footer{
+  text-align:center;
+  padding:20px;
+  color:#94a3b8;
+  font-size:14px;
+  border-top:1px solid rgba(255,255,255,0.05);
 }
 
-/* ===== 页脚 ===== */
-footer {
-  text-align: center;
-  padding: 20px;
-  color: #94a3b8;
-  font-size: 14px;
-  border-top: 1px solid rgba(255,255,255,0.05);
+footer a{
+  color:#94a3b8;
+  text-decoration:none;
 }
 
-footer a {
-  color: #94a3b8;
-  text-decoration: none;
-}
+@media (max-width:900px){
 
-@media (max-width: 900px){
   .work-title-btn{
     font-size:32px;
   }
@@ -287,7 +260,9 @@ footer a {
     width:150px;
     height:150px;
   }
+
 }
+
 </style>
 </head>
 
@@ -307,71 +282,75 @@ footer a {
 </header>
 
 <main>
-  <section class="zoom-section">
-    <div class="work-title-wrap">
-      <button id="openInfoBtn" class="work-title-btn">M81 &amp; M82</button>
-    </div>
+<section class="zoom-section">
 
-    <div class="zoom-wrapper">
-      <div class="image-box" id="imageBox">
-        <img src="images/M81.jpeg" alt="M81 and M82" id="mainImage">
-        <div class="zoom-preview" id="resultBox"></div>
-      </div>
-    </div>
-  </section>
+<div class="work-title-wrap">
+<button id="openInfoBtn" class="work-title-btn">M81 &amp; M82</button>
+</div>
+
+<div class="zoom-wrapper">
+<div class="image-box" id="imageBox">
+<img src="images/M81.jpeg" alt="M81 and M82" id="mainImage">
+<div class="zoom-preview" id="resultBox"></div>
+</div>
+</div>
+
+</section>
 </main>
 
 <section id="comments" style="max-width:960px;margin:0 auto;padding:20px 20px 40px;">
-  <h2>评论</h2>
-  <script src="https://utteranc.es/client.js"
-          repo="Andy330523/stars"
-          issue-term="pathname"
-          label="Comment"
-          theme="dark-blue"
-          crossorigin="anonymous"
-          async>
-  </script>
+<h2>评论</h2>
+<script src="https://utteranc.es/client.js"
+repo="Andy330523/stars"
+issue-term="pathname"
+label="Comment"
+theme="dark-blue"
+crossorigin="anonymous"
+async>
+</script>
 </section>
 
 <footer>
-  <p>联系：<a href="mailto:AndyZhouChudi@outlook.com">AndyZhouChudi@outlook.com</a></p>
-  <p>© 2025 CD的星空 · Andy 在星空下搭建。</p>
+<p>联系：<a href="mailto:AndyZhouChudi@outlook.com">AndyZhouChudi@outlook.com</a></p>
+<p>© 2025 CD的星空 · Andy 在星空下搭建。</p>
 </footer>
 
 </div>
 
 <div class="info-panel" id="infoPanel">
-  <div class="info-panel-header">
-    <h2>详细信息</h2>
-    <button id="closeInfoBtn" class="close-btn">×</button>
-  </div>
+<div class="info-panel-header">
+<h2>详细信息</h2>
+<button id="closeInfoBtn" class="close-btn">×</button>
+</div>
 
-  <div class="info-panel-content">
-    <div class="info-item">
-      <span class="info-label">目标</span>
-      <span class="info-value">M81 Galaxy</span>
-    </div>
+<div class="info-panel-content">
 
-    <div class="info-item">
-      <span class="info-label">拍摄位置</span>
-      <span class="info-value">103.691944</span>
-    </div>
+<div class="info-item">
+<span class="info-label">目标</span>
+<span class="info-value">M81 Galaxy</span>
+</div>
 
-    <div class="info-item">
-      <span class="info-label">单张曝光</span>
-      <span class="info-value">300s</span>
-    </div>
+<div class="info-item">
+<span class="info-label">拍摄位置</span>
+<span class="info-value">103.691944</span>
+</div>
 
-    <div class="info-item">
-      <span class="info-label">堆叠张数</span>
-      <span class="info-value">40</span>
-    </div>
+<div class="info-item">
+<span class="info-label">单张曝光</span>
+<span class="info-value">300s</span>
+</div>
 
-    <div class="info-item">
-      <span class="info-label">拍摄设备</span>
-      <span class="info-value">请填写你的主镜 / 相机 / 赤道仪</span>
-    </div>
-  </div>
+<div class="info-item">
+<span class="info-label">堆叠张数</span>
+<span class="info-value">40</span>
+</div>
+
+<div class="info-item">
+<span class="info-label">拍摄设备</span>
+<span class="info-value">请填写你的主镜 / 相机 / 赤道仪</span>
+</div>
+
+</div>
 </div>
 
 <div class="info-overlay" id="infoOverlay"></div>
@@ -379,103 +358,88 @@ footer a {
 <script src="galaxy.js"></script>
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  /* 当前页面高亮 */
-  const page = window.location.pathname.split("/").pop();
-  document.querySelectorAll("header a").forEach(a => {
-    if (a.getAttribute("href") === page) {
-      a.classList.add("active");
-    }
-  });
 
-  /* 页面切换动画 */
-  document.querySelectorAll("header a").forEach(link => {
-    link.addEventListener("click", e => {
-      const href = link.getAttribute("href");
-      if (!href || href.startsWith("#")) return;
+document.addEventListener("DOMContentLoaded",()=>{
 
-      e.preventDefault();
-      document.body.classList.add("page-exit");
+const imageBox=document.getElementById("imageBox")
+const mainImage=document.getElementById("mainImage")
+const resultBox=document.getElementById("resultBox")
 
-      setTimeout(() => {
-        window.location.href = href;
-      }, 500);
-    });
-  });
+const zoomLevel=3
 
-  /* 鼠标跟随放大窗 */
-  const imageBox = document.getElementById("imageBox");
-  const mainImage = document.getElementById("mainImage");
-  const resultBox = document.getElementById("resultBox");
+function moveZoomPreview(e){
 
-  const zoomLevel = 3;
+const rect=mainImage.getBoundingClientRect()
 
-  function moveZoomPreview(e) {
-    const rect = mainImage.getBoundingClientRect();
+const x=e.clientX-rect.left
+const y=e.clientY-rect.top
 
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+const previewWidth=resultBox.offsetWidth
+const previewHeight=resultBox.offsetHeight
 
-    const previewWidth = resultBox.offsetWidth;
-    const previewHeight = resultBox.offsetHeight;
+let previewX=x+24
+let previewY=y+24
 
-    let previewX = x + 24;
-    let previewY = y + 24;
+if(previewX+previewWidth>rect.width){
+previewX=x-previewWidth-24
+}
 
-    if (previewX + previewWidth > rect.width) {
-      previewX = x - previewWidth - 24;
-    }
+if(previewY+previewHeight>rect.height){
+previewY=y-previewHeight-24
+}
 
-    if (previewY + previewHeight > rect.height) {
-      previewY = y - previewHeight - 24;
-    }
+if(previewX<0)previewX=12
+if(previewY<0)previewY=12
 
-    if (previewX < 0) previewX = 12;
-    if (previewY < 0) previewY = 12;
+resultBox.style.left=previewX+"px"
+resultBox.style.top=previewY+"px"
 
-    resultBox.style.left = previewX + "px";
-    resultBox.style.top = previewY + "px";
+const bgPosX=-((x*zoomLevel)-previewWidth/2)
+const bgPosY=-((y*zoomLevel)-previewHeight/2)
 
-    const bgPosX = -((x * zoomLevel) - previewWidth / 2);
-    const bgPosY = -((y * zoomLevel) - previewHeight / 2);
+resultBox.style.backgroundImage=`url('${mainImage.src}')`
+resultBox.style.backgroundSize=`${rect.width*zoomLevel}px ${rect.height*zoomLevel}px`
+resultBox.style.backgroundPosition=`${bgPosX}px ${bgPosY}px`
 
-    resultBox.style.backgroundImage = `url('${mainImage.src}')`;
-    resultBox.style.backgroundSize = `${rect.width * zoomLevel}px ${rect.height * zoomLevel}px`;
-    resultBox.style.backgroundPosition = `${bgPosX}px ${bgPosY}px`;
-  }
+}
 
-  if (imageBox && mainImage && resultBox) {
-    imageBox.addEventListener("mouseenter", () => {
-      resultBox.style.display = "block";
-    });
+if(imageBox){
 
-    imageBox.addEventListener("mouseleave", () => {
-      resultBox.style.display = "none";
-    });
+imageBox.addEventListener("mouseenter",()=>{
+resultBox.style.display="block"
+})
 
-    imageBox.addEventListener("mousemove", moveZoomPreview);
-  }
+imageBox.addEventListener("mouseleave",()=>{
+resultBox.style.display="none"
+})
 
-  /* 详细信息弹窗 */
-  const openInfoBtn = document.getElementById("openInfoBtn");
-  const closeInfoBtn = document.getElementById("closeInfoBtn");
-  const infoPanel = document.getElementById("infoPanel");
-  const infoOverlay = document.getElementById("infoOverlay");
+imageBox.addEventListener("mousemove",moveZoomPreview)
 
-  function openPanel() {
-    infoPanel.classList.add("show");
-    infoOverlay.classList.add("show");
-  }
+}
 
-  function closePanel() {
-    infoPanel.classList.remove("show");
-    infoOverlay.classList.remove("show");
-  }
+/* 详细信息面板 */
 
-  if (openInfoBtn) openInfoBtn.addEventListener("click", openPanel);
-  if (closeInfoBtn) closeInfoBtn.addEventListener("click", closePanel);
-  if (infoOverlay) infoOverlay.addEventListener("click", closePanel);
-});
+const openBtn=document.getElementById("openInfoBtn")
+const closeBtn=document.getElementById("closeInfoBtn")
+const panel=document.getElementById("infoPanel")
+const overlay=document.getElementById("infoOverlay")
+
+function openPanel(){
+panel.classList.add("show")
+overlay.classList.add("show")
+}
+
+function closePanel(){
+panel.classList.remove("show")
+overlay.classList.remove("show")
+}
+
+openBtn.addEventListener("click",openPanel)
+closeBtn.addEventListener("click",closePanel)
+overlay.addEventListener("click",closePanel)
+
+})
+
 </script>
 
 </body>
