@@ -6,20 +6,23 @@
 <title>作品集</title>
 
 <style>
-/* ===== 放大图与信息面板 ===== */
-  .work-title-wrap{
+/* ===== 作品标题 ===== */
+.work-title-wrap{
   margin-bottom:24px;
 }
 
 .work-title-btn{
   position:relative;
+  display:inline-block;
   background:none;
   border:none;
   padding:0 0 8px 0;
   color:#e5e7eb;
-  font-size:34px;
+  font-size:40px;
   font-weight:700;
   letter-spacing:0.5px;
+  line-height:1.1;
+  text-align:left;
   cursor:url("images/pointer.png") 6 0, pointer;
 }
 
@@ -45,17 +48,16 @@
   color:#ffffff;
   text-shadow:0 0 8px #8b5cf6, 0 0 15px #22d3ee;
 }
+
+/* ===== 图片展示与鼠标跟随放大窗 ===== */
 .zoom-wrapper{
-  display:flex;
-  gap:24px;
-  align-items:flex-start;
-  flex-wrap:wrap;
+  display:block;
 }
 
 .image-box{
   position:relative;
   width:100%;
-  max-width:620px;
+  max-width:820px;
   border-radius:16px;
   overflow:hidden;
   background:rgba(255,255,255,0.03);
@@ -68,50 +70,21 @@
   display:block;
 }
 
-.lens{
+.zoom-preview{
   position:absolute;
-  width:140px;
-  height:140px;
-  border:2px solid rgba(255,255,255,0.85);
-  background:rgba(255,255,255,0.08);
-  box-shadow:0 0 12px rgba(255,255,255,0.15);
-  border-radius:12px;
+  width:180px;
+  height:180px;
+  border:1px solid rgba(255,255,255,0.18);
+  border-radius:14px;
+  background-color:rgba(8,12,22,0.92);
+  background-repeat:no-repeat;
+  box-shadow:0 8px 28px rgba(0,0,0,0.35);
   pointer-events:none;
   display:none;
+  z-index:5;
 }
 
-.result-box{
-  width:320px;
-  height:320px;
-  border-radius:16px;
-  border:1px solid rgba(255,255,255,0.08);
-  background-color:rgba(255,255,255,0.03);
-  background-repeat:no-repeat;
-  background-position:center;
-  box-shadow:0 0 20px rgba(0,0,0,0.25);
-  display:none;
-}
-
-.info-button-wrap{
-  margin-top:24px;
-}
-
-.info-btn{
-  background:rgba(255,255,255,0.06);
-  color:#e5e7eb;
-  border:1px solid rgba(255,255,255,0.12);
-  padding:12px 20px;
-  border-radius:12px;
-  font-size:15px;
-  font-weight:600;
-  transition:0.3s;
-}
-
-.info-btn:hover{
-  background:rgba(255,255,255,0.12);
-  box-shadow:0 0 12px rgba(139,92,246,0.35);
-}
-
+/* ===== 信息面板 ===== */
 .info-overlay{
   position:fixed;
   inset:0;
@@ -193,15 +166,7 @@
   color:#e5e7eb;
 }
 
-@media (max-width: 900px){
-  .result-box{
-    width:100%;
-    max-width:620px;
-    height:260px;
-  }
-}
-
-/* ===== 页面切换动画（只作用在内容层） ===== */
+/* ===== 页面切换动画 ===== */
 .page-exit .page-content {
   animation: slideOut 0.5s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
 }
@@ -308,6 +273,21 @@ footer a {
   color: #94a3b8;
   text-decoration: none;
 }
+
+@media (max-width: 900px){
+  .work-title-btn{
+    font-size:32px;
+  }
+
+  .image-box{
+    max-width:100%;
+  }
+
+  .zoom-preview{
+    width:150px;
+    height:150px;
+  }
+}
 </style>
 </head>
 
@@ -335,14 +315,12 @@ footer a {
     <div class="zoom-wrapper">
       <div class="image-box" id="imageBox">
         <img src="images/M81.jpeg" alt="M81 and M82" id="mainImage">
-        <div class="lens" id="lens"></div>
+        <div class="zoom-preview" id="resultBox"></div>
       </div>
-
-      <div class="result-box" id="resultBox"></div>
     </div>
   </section>
 </main>
-  
+
 <section id="comments" style="max-width:960px;margin:0 auto;padding:20px 20px 40px;">
   <h2>评论</h2>
   <script src="https://utteranc.es/client.js"
@@ -410,7 +388,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  /* 页面切换：一次滑出 + 星空冻结 */
+  /* 页面切换动画 */
   document.querySelectorAll("header a").forEach(link => {
     link.addEventListener("click", e => {
       const href = link.getAttribute("href");
@@ -418,7 +396,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       e.preventDefault();
       document.body.classList.add("page-exit");
-      window.dispatchEvent(new Event("page-exit"));
 
       setTimeout(() => {
         window.location.href = href;
@@ -426,54 +403,57 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  /* 图片放大 */
+  /* 鼠标跟随放大窗 */
   const imageBox = document.getElementById("imageBox");
   const mainImage = document.getElementById("mainImage");
-  const lens = document.getElementById("lens");
   const resultBox = document.getElementById("resultBox");
 
-  const zoomLevel = 2.5;
+  const zoomLevel = 3;
 
-  function moveLens(e) {
+  function moveZoomPreview(e) {
     const rect = mainImage.getBoundingClientRect();
 
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    const lensWidth = lens.offsetWidth;
-    const lensHeight = lens.offsetHeight;
+    const previewWidth = resultBox.offsetWidth;
+    const previewHeight = resultBox.offsetHeight;
 
-    let lensX = x - lensWidth / 2;
-    let lensY = y - lensHeight / 2;
+    let previewX = x + 24;
+    let previewY = y + 24;
 
-    if (lensX < 0) lensX = 0;
-    if (lensY < 0) lensY = 0;
-    if (lensX > rect.width - lensWidth) lensX = rect.width - lensWidth;
-    if (lensY > rect.height - lensHeight) lensY = rect.height - lensHeight;
+    if (previewX + previewWidth > rect.width) {
+      previewX = x - previewWidth - 24;
+    }
 
-    lens.style.left = lensX + "px";
-    lens.style.top = lensY + "px";
+    if (previewY + previewHeight > rect.height) {
+      previewY = y - previewHeight - 24;
+    }
 
-    const bgX = -(lensX * zoomLevel);
-    const bgY = -(lensY * zoomLevel);
+    if (previewX < 0) previewX = 12;
+    if (previewY < 0) previewY = 12;
+
+    resultBox.style.left = previewX + "px";
+    resultBox.style.top = previewY + "px";
+
+    const bgPosX = -((x * zoomLevel) - previewWidth / 2);
+    const bgPosY = -((y * zoomLevel) - previewHeight / 2);
 
     resultBox.style.backgroundImage = `url('${mainImage.src}')`;
     resultBox.style.backgroundSize = `${rect.width * zoomLevel}px ${rect.height * zoomLevel}px`;
-    resultBox.style.backgroundPosition = `${bgX}px ${bgY}px`;
+    resultBox.style.backgroundPosition = `${bgPosX}px ${bgPosY}px`;
   }
 
-  if (imageBox && mainImage && lens && resultBox) {
+  if (imageBox && mainImage && resultBox) {
     imageBox.addEventListener("mouseenter", () => {
-      lens.style.display = "block";
       resultBox.style.display = "block";
     });
 
     imageBox.addEventListener("mouseleave", () => {
-      lens.style.display = "none";
       resultBox.style.display = "none";
     });
 
-    imageBox.addEventListener("mousemove", moveLens);
+    imageBox.addEventListener("mousemove", moveZoomPreview);
   }
 
   /* 详细信息弹窗 */
