@@ -1,213 +1,224 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>一些碎碎念...</title>
 
 <style>
-  main p {
-    margin: 16px 0;
-  }
 
-  .big-word {
-    font-size: 24px;
-    font-weight: 700;
-    text-align: center;
-    margin: 28px 0;
-    letter-spacing: 2px;
-    color: #ffffff;
-  }
+/* 段落间距 */
+main p{
+  margin:16px 0;
+}
 
-  .img-figure {
-    margin: 24px auto;
-    max-width: 800px;
-    text-align: center;
-  }
+/* 强调文字 */
+.big-word{
+  font-size:24px;
+  font-weight:700;
+  text-align:center;
+  margin:28px 0;
+  letter-spacing:2px;
+  color:#ffffff;
+}
 
-  .img-figure figcaption {
-    margin-top: 6px;
-    font-size: 13px;
-    color: #94a3b8;
-  }
+/* 图片 */
+.img-figure{
+  margin:24px auto;
+  max-width:800px;
+  text-align:center;
+}
 
-  .article-img {
-    width: 100%;
-    max-width: 800px;
-    display: block;
-    margin: 24px auto;
-    border-radius: 12px;
-  }
+.img-figure figcaption{
+  margin-top:6px;
+  font-size:13px;
+  color:#94a3b8;
+}
 
-  .divider {
-    border: none;
-    border-top: 1px solid rgba(255,255,255,0.15);
-    margin: 30px auto 24px;
-    max-width: 500px;
-  }
+.article-img{
+  width:100%;
+  max-width:800px;
+  display:block;
+  margin:24px auto;
+  border-radius:12px;
+}
 
-  .popup-img {
-    display: block;
-    width: 100%;
-    max-width: 500px;
-    margin: 20px auto 10px;
-    border-radius: 12px;
-    cursor: url("images/pointer.png") 6 0, pointer;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-  }
+/* ===== 云触发文字 ===== */
 
-  .popup-img:hover {
-    transform: scale(1.02);
-    box-shadow: 0 0 20px rgba(255,255,255,0.08);
-  }
+.cloud-wrapper{
+  text-align:center;
+  margin:28px 0;
+}
 
-  .popup-caption {
-    text-align: center;
-    color: #94a3b8;
-    font-size: 14px;
-    margin-bottom: 24px;
-  }
+.cloud-trigger{
+  font-size:24px;
+  font-weight:700;
+  cursor:pointer;
+  position:relative;
+  display:inline-block;
+}
 
-  .lightbox {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.88);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    padding: 20px;
-  }
+.cloud-trigger::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-6px;
+  width:0%;
+  height:2px;
+  background:white;
+  transition:width .25s ease;
+}
 
-  .lightbox img {
-    max-width: 92%;
-    max-height: 92%;
-    border-radius: 12px;
-    box-shadow: 0 0 30px rgba(255,255,255,0.12);
-  }
+.cloud-trigger:hover::after{
+  width:100%;
+}
 
-  /* ===== 页面切换动画（只做离开，一次完成） ===== */
-  .page-exit .page-content {
-    animation: slideOut 0.5s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
-  }
+/* ===== 弹出图片 ===== */
 
-  @keyframes slideOut {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-100%); }
-  }
+.cloud-popup{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.9);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
 
-  /* ===== 当前页面导航高亮 ===== */
-  .nav-link.active,
-  #brand.active {
-    color: #ffffff;
-    text-shadow: 0 0 8px #8b5cf6, 0 0 15px #22d3ee;
-  }
+.cloud-popup-content{
+  text-align:center;
+}
 
-  /* ===== 星空背景 ===== */
-  #galaxy-bg {
-    position: fixed;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    display: block;
-  }
+.cloud-popup img{
+  max-width:85vw;
+  max-height:80vh;
+  border-radius:10px;
+}
 
-  /* ===== 页面内容层 ===== */
-  .page-content {
-    position: relative;
-    z-index: 1;
-  }
+.cloud-caption{
+  margin-top:12px;
+  font-size:14px;
+  color:#94a3b8;
+}
 
-  /* ===== 全局 ===== */
-  body {
-    font-family: system-ui, sans-serif;
-    background: #0b0f1a;
-    color: #e5e7eb;
-    margin: 0;
-    line-height: 1.7;
-    font-size: 18px;
-    cursor: url("images/cursor.png") 4 4, auto;
-  }
+/* ===== 页面切换动画 ===== */
 
-  a, button, .nav-link, #brand {
-    cursor: url("images/pointer.png") 6 0, pointer;
-  }
+.page-exit .page-content{
+  animation:slideOut .5s cubic-bezier(.4,0,.2,1) forwards;
+}
 
-  /* ===== 顶栏 ===== */
-  header {
-    position: sticky;
-    top: 0;
-    background: rgba(10, 15, 26, 0.85);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    padding: 10px 20px;
-    display: flex;
-    align-items: center;
-  }
+@keyframes slideOut{
+  from{transform:translateX(0)}
+  to{transform:translateX(-100%)}
+}
 
-  .nav-left {
-    display: flex;
-    align-items: center;
-  }
+/* ===== 导航高亮 ===== */
 
-  #brand {
-    font-size: 26px;
-    font-weight: 700;
-    margin-right: 20px;
-    color: #e5e7eb;
-    text-decoration: none;
-  }
+.nav-link.active,
+#brand.active{
+  color:#ffffff;
+  text-shadow:0 0 8px #8b5cf6,0 0 15px #22d3ee;
+}
 
-  .nav-link {
-    margin-right: 20px;
-    color: #e5e7eb;
-    text-decoration: none;
-    font-size: 18px;
-    font-weight: 600;
-  }
+/* 星空背景 */
 
-  #brand:hover,
-  .nav-link:hover {
-    color: #ffffff;
-    text-shadow: 0 0 8px #8b5cf6, 0 0 15px #22d3ee;
-    transition: 0.3s;
-  }
+#galaxy-bg{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:-1;
+}
 
-  /* ===== 正文 ===== */
-  main {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 40px 20px;
-  }
+.page-content{
+  position:relative;
+  z-index:1;
+}
 
-  h1 {
-    margin-bottom: 24px;
-  }
+/* ===== 全局 ===== */
 
-  h2 {
-    margin-top: 40px;
-    margin-bottom: 10px;
-  }
+body{
+  font-family:system-ui,sans-serif;
+  background:#0b0f1a;
+  color:#e5e7eb;
+  margin:0;
+  line-height:1.7;
+  font-size:18px;
+  cursor:url("images/cursor.png") 4 4,auto;
+}
 
-  h3 {
-    margin-top: 28px;
-    margin-bottom: 10px;
-  }
+a,button,.nav-link,#brand{
+  cursor:url("images/pointer.png") 6 0,pointer;
+}
 
-  /* ===== 页脚 ===== */
-  footer {
-    text-align: center;
-    padding: 20px;
-    color: #94a3b8;
-    font-size: 14px;
-    border-top: 1px solid rgba(255,255,255,0.05);
-  }
+/* ===== 顶栏 ===== */
 
-  footer a {
-    color: #94a3b8;
-    text-decoration: none;
-  }
+header{
+  position:sticky;
+  top:0;
+  background:rgba(10,15,26,.85);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid rgba(255,255,255,.05);
+  padding:10px 20px;
+  display:flex;
+  align-items:center;
+}
+
+.nav-left{
+  display:flex;
+  align-items:center;
+}
+
+#brand{
+  font-size:26px;
+  font-weight:700;
+  margin-right:20px;
+  color:#e5e7eb;
+  text-decoration:none;
+}
+
+.nav-link{
+  margin-right:20px;
+  color:#e5e7eb;
+  text-decoration:none;
+  font-size:18px;
+  font-weight:600;
+}
+
+#brand:hover,
+.nav-link:hover{
+  color:#ffffff;
+  text-shadow:0 0 8px #8b5cf6,0 0 15px #22d3ee;
+  transition:.3s;
+}
+
+/* ===== 正文 ===== */
+
+main{
+  max-width:960px;
+  margin:0 auto;
+  padding:40px 20px;
+}
+
+h1{margin-bottom:24px;}
+h2{margin-top:40px;margin-bottom:10px;}
+h3{margin-top:28px;margin-bottom:10px;}
+
+/* ===== 页脚 ===== */
+
+footer{
+  text-align:center;
+  padding:20px;
+  color:#94a3b8;
+  font-size:14px;
+  border-top:1px solid rgba(255,255,255,.05);
+}
+
+footer a{
+  color:#94a3b8;
+  text-decoration:none;
+}
+
 </style>
 </head>
 
@@ -218,226 +229,180 @@
 <div class="page-content">
 
 <header>
-  <div class="nav-left">
-    <a href="index.html" id="brand">群星</a>
-    <a href="gallery.html" class="nav-link">作品集</a>
-    <a href="notes.html" class="nav-link">一些碎碎念...</a>
-    <a href="join.html" class="nav-link">加入我们</a>
-  </div>
+<div class="nav-left">
+<a href="index.html" id="brand">群星</a>
+<a href="gallery.html" class="nav-link">作品集</a>
+<a href="notes.html" class="nav-link">一些碎碎念...</a>
+<a href="join.html" class="nav-link">加入我们</a>
+</div>
 </header>
 
 <main>
-  <h1>一些碎碎念...</h1>
-  <p>
-    这个 capstone 真的是相当曲折。
-    我本来是想就学习一些天文知识然后去拍片，
-    但是我又需要一个网站来承载我的照片和故事，
-    所以我又需要学习如何去搭建和维护一个网站。
-    后来我又想拍个视频来记录这一切，
-    所以我又需要去学习达芬奇。
-    最后我还想去川西拍摄最纯净的天空，
-    所以我又去考了个驾照……
-  </p>
 
-  <h2>天文相机到底哪里比普通相机好了？</h2>
-  <p>
-    有些朋友可能会疑惑，都是可以拍摄照片的相机，我们为什么不直接使用单反或者微单接在主镜上进行拍摄呢，而是要使用专门的天文冷冻相机，或者使用由普通机器改装而来的冷冻相机？
-  </p>
-  <p>
-    这涉及到深空摄影的本质————长曝光。我们知道，拍摄的本质就是记录光线在时间和空间上的分布，一张照片本质上来讲就是很多个光点的集成。
-  </p>
-  <p>
-    但是，在短短几秒内就得到足够的光在深空摄影中很困难。因为我们拍摄的对象远在可能无数光年以外，并且还有地球大气层阻碍着光线的传播。所以在有限的时间内，我们所能记录到的光点将会很少。
-  </p>
-  <p>
-    因此，我们需要拉长曝光的时间，让相机有足够的时间来接收到足够的光点，通常一张不错的星云照片的总曝光时间会在几个小时左右。
-  </p>
-  <p>
-    不过，问题也就随之而来：普通相机的 CMOS 在长时间工作时会产生大量热噪声。这些噪点并不是来自星云或星空本身，而是传感器在通电、升温过程中随机产生的电子信号。
-  </p>
-  <p>
-    在日常摄影中，单张曝光往往只有几分之一秒到几秒钟，这些热噪声几乎可以忽略；但在深空摄影动辄几十秒、几分钟，甚至上百张连续曝光的情况下，热噪声会被不断累积，严重影响画面的纯净度。
-  </p>
-  <p>
-    天文冷冻相机的核心优势，就在于主动温控。通过半导体制冷模块，将 CMOS 稳定在一个远低于环境温度的状态，从而大幅降低热噪声的产生，进而得到更好的成像质量。
-  </p>
+<h1>一些碎碎念...</h1>
 
-  <h3>仅此而已吗？</h3>
-  <p>不尽然，天文相机还有一个明显的优势，那就是对红外光的接受能力。</p>
+<p>
+这个 capstone 真的是相当曲折。
+我本来是想就学习一些天文知识然后去拍片，
+但是我又需要一个网站来承载我的照片和故事，
+所以我又需要学习如何去搭建和维护一个网站。
+后来我又想拍个视频来记录这一切，
+所以我又需要去学习达芬奇。
+最后我还想去川西拍摄最纯净的天空，
+所以我又去考了个驾照……
+</p>
 
-  <figure class="img-figure">
-    <img src="images/light.jpeg" alt="光谱图" class="article-img">
-    <figcaption>光谱图</figcaption>
-  </figure>
+<h2>天文相机到底哪里比普通相机好了？</h2>
 
-  <p>
-    我们知道，氢元素和硫元素的峰值波段在 656nm 和 672nm 左右，但是普通相机的 CMOS 前通常有一块红外截止滤光片，这会削减 650nm 以上的红光，并完全截止 700nm 以上的红外光，导致普通相机在天文摄影中会严重低估，甚至拍不到氢、硫主导的星云结构。
-  </p>
+<p>
+有些朋友可能会疑惑，都是可以拍摄照片的相机，
+我们为什么不直接使用单反或者微单接在主镜上进行拍摄呢，
+而是要使用专门的天文冷冻相机？
+</p>
 
-  <figure class="img-figure">
-    <img src="images/compare.png" alt="对比图" class="article-img">
-    <figcaption>对比图</figcaption>
-  </figure>
+<p>
+这涉及到深空摄影的本质————长曝光。
+拍摄的本质就是记录光线在时间和空间上的分布，
+一张照片其实就是无数光子的累积。
+</p>
 
-  <h2>第一个夜晚</h2>
+<p>
+但是在深空摄影中，
+拍摄对象往往在数千甚至数万光年之外，
+短时间内能记录到的光非常少。
+</p>
 
-  <p>
-    第一次拍摄实在是太曲折了……
-    首先是运输问题，这么多设备我需要一个合适的箱子来搬运。
-  </p>
+<p>
+因此我们需要长时间曝光，
+让相机有足够时间接收到光线，
+一张不错的星云照片，
+总曝光时间往往会达到几个小时。
+</p>
 
-  <p>
-    所以我直接看群友他们的箱子，然后购买了他们那个型号的箱子。
-    但是等箱子到了我方才发现，别人的主镜比我的小了很多。
-    这个箱子最多只能装下赤道仪和导星镜。
-  </p>
+<p>
+普通相机的 CMOS 在长时间工作时会产生热噪声，
+这些噪点并不是来自星云，
+而是传感器本身产生的电子信号。
+</p>
 
-  <p>
-    当时我其实是十分的慌张的，因为明天就要出发了。
-    好在经过了一阵翻箱倒柜后发现我的行李箱的一半正好可以把剩下的装备全部装下，
-    剩下的一半甚至还能装些衣物，实在是令人惊喜。
-  </p>
+<p>
+天文冷冻相机通过半导体制冷模块，
+将 CMOS 稳定在远低于环境温度的状态，
+从而显著降低热噪声。
+</p>
 
-  <p>
-    然后就是拍摄的问题了。在这次拍摄之前，
-    我犯了一个非常基础但是致命的问题：
-    我以前一直认为只要是光污染低的地方就可以完成高质量拍摄，
-    但是我忽略了一个重要因素。
-  </p>
+<h3>仅此而已吗？</h3>
 
-  <p class="big-word">云</p>
+<p>不尽然，天文相机还有一个明显优势，那就是对红外光的接受能力。</p>
 
-  <hr class="divider">
+<figure class="img-figure">
+<img src="images/light.jpeg" alt="光谱图" class="article-img">
+<figcaption>光谱图</figcaption>
+</figure>
 
-  <img
-    src="images/moon.png"
-    alt="被遮住的月亮"
-    class="popup-img"
-    onclick="openLightbox(this.src)"
-  >
-  <p class="popup-caption">这是被遮住的月亮</p>
+<p>
+氢元素与硫元素的主要谱线位于 656nm 与 672nm。
+而普通相机 CMOS 前通常有红外截止滤镜，
+会削弱甚至完全阻挡这些波段。
+</p>
 
-  <p>
-    无论光污染低到什么地步，云总是能阻挡你拍摄的光线。
-    你都拍不到，又何谈拍好呢？
-  </p>
+<figure class="img-figure">
+<img src="images/compare.png" alt="对比图" class="article-img">
+<figcaption>对比图</figcaption>
+</figure>
 
-  <p>
-    以前我一直专注于寻找光污染低的地方，
-    但是却忽略了云图。
-  </p>
+<h2>第一个夜晚</h2>
 
-  <p>
-    所以当我站在民宿的楼顶时，
-    望着密不透风的天空，
-    无奈涌上心头。
-  </p>
+<p>
+然后就是拍摄的问题了。
+在这次拍摄之前，
+我犯了一个非常基础但致命的错误：
+我一直只关注光污染，
+却忽略了一个重要因素。
+</p>
 
-  <p>
-    连月亮的光辉都被覆盖，
-    那如何拍摄呢……
-  </p>
+<div class="cloud-wrapper">
+<span class="cloud-trigger" onclick="openCloud()">云。</span>
+</div>
 
-  <p>
-    查看天文软件，云图显示凌晨两点开始云会变少。
-    我只能赌这个数据是准确的了。
-  </p>
+<p>
+无论光污染多低，
+云层都会阻挡光线。
+你都拍不到，又何谈拍好呢？
+</p>
 
-  <p>
-    不过我十二点的时候迷迷糊糊醒了，
-    拉开窗帘一看，
-    映入眼帘的是茫茫星点。
-  </p>
-
-  <p>
-    我大喜过望，赶紧拿上装备去到顶楼开始拍摄。
-    这实在是令人惊喜。
-  </p>
-
-  <p>
-    可惜天空还是有薄云掠过，
-    拍摄的 10 张中只有 4 张能用。
-    但是我已经很满意了。
-  </p>
-
-  <p>
-    我现在最大的目标就是练车，
-    赶紧把驾照考出来，
-    就能到更好的地方拍摄。
-  </p>
 </main>
 
 <section id="comments" style="max-width:960px;margin:0 auto;padding:20px 20px 40px;">
-  <h2>评论</h2>
-  <script src="https://utteranc.es/client.js"
-          repo="Andy330523/stars"
-          issue-term="pathname"
-          label="Comment"
-          theme="dark-blue"
-          crossorigin="anonymous"
-          async>
-  </script>
+<h2>评论</h2>
+<script src="https://utteranc.es/client.js"
+repo="Andy330523/stars"
+issue-term="pathname"
+label="Comment"
+theme="dark-blue"
+crossorigin="anonymous"
+async>
+</script>
 </section>
 
 <footer>
-  <p>联系：<a href="mailto:AndyZhouChudi@outlook.com">AndyZhouChudi@outlook.com</a></p>
-  <p>© 2025 CD的星空 · Andy 在星空下搭建。</p>
+<p>联系：<a href="mailto:AndyZhouChudi@outlook.com">AndyZhouChudi@outlook.com</a></p>
+<p>© 2025 CD的星空 · Andy 在星空下搭建。</p>
 </footer>
 
 </div>
 
-<div class="lightbox" id="lightbox" onclick="closeLightbox()">
-  <img id="lightbox-img" src="" alt="放大图片">
+<!-- 弹出内容 -->
+
+<div class="cloud-popup" id="cloudPopup" onclick="closeCloud()">
+<div class="cloud-popup-content">
+<img src="images/moon.png">
+<div class="cloud-caption">这是被遮住的月亮</div>
+</div>
 </div>
 
 <script src="galaxy.js"></script>
 
 <script>
-/* 当前页面导航高亮 */
-document.addEventListener("DOMContentLoaded", () => {
-  const page = window.location.pathname.split("/").pop();
-  document.querySelectorAll("header a").forEach(a => {
-    if (a.getAttribute("href") === page) {
-      a.classList.add("active");
-    }
-  });
+
+/* 导航高亮 */
+
+document.addEventListener("DOMContentLoaded",()=>{
+const page=window.location.pathname.split("/").pop();
+document.querySelectorAll("header a").forEach(a=>{
+if(a.getAttribute("href")===page){
+a.classList.add("active");
+}
+});
 });
 
-/* 页面切换：一次滑出 + 星空冻结 */
-document.querySelectorAll("header a").forEach(link => {
-  link.addEventListener("click", e => {
-    const href = link.getAttribute("href");
-    if (!href || href.startsWith("#")) return;
+/* 页面切换动画 */
 
-    e.preventDefault();
-    document.body.classList.add("page-exit");
-    window.dispatchEvent(new Event("page-exit"));
+document.querySelectorAll("header a").forEach(link=>{
+link.addEventListener("click",e=>{
+const href=link.getAttribute("href");
+if(!href||href.startsWith("#")) return;
 
-    setTimeout(() => {
-      window.location.href = href;
-    }, 500);
-  });
+e.preventDefault();
+document.body.classList.add("page-exit");
+window.dispatchEvent(new Event("page-exit"));
+
+setTimeout(()=>{
+window.location.href=href;
+},500);
+});
 });
 
-/* 图片弹出 */
-function openLightbox(src) {
-  const lightbox = document.getElementById("lightbox");
-  const lightboxImg = document.getElementById("lightbox-img");
-  lightboxImg.src = src;
-  lightbox.style.display = "flex";
+/* 云图片弹出 */
+
+function openCloud(){
+document.getElementById("cloudPopup").style.display="flex";
 }
 
-function closeLightbox() {
-  const lightbox = document.getElementById("lightbox");
-  lightbox.style.display = "none";
+function closeCloud(){
+document.getElementById("cloudPopup").style.display="none";
 }
 
-/* ESC 关闭弹窗 */
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") {
-    closeLightbox();
-  }
-});
 </script>
 
 </body>
