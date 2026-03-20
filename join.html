@@ -37,15 +37,6 @@
   text-align: center;
   margin-bottom: 20px;
 }
-/* ===== 页面切换动画（只做离开，一次完成） ===== */
-.page-exit .page-content {
-  animation: slideOut 0.5s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
-}
-
-@keyframes slideOut {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-100%); }
-}
 
 /* ===== 当前页面导航高亮 ===== */
 .nav-link.active,
